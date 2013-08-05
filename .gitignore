@@ -1,0 +1,13 @@
+.gradle
+
+/build/
+/.settings/
+/.project
+/.classpath
+
+*.class
+*.swp
+*~
+*.log
+*.app
+.DS_Store

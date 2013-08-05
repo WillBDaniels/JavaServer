@@ -1,0 +1,25 @@
+apply plugin: 'java'
+
+
+defaultTasks 'build'
+
+task wrapper(type: Wrapper){
+	gradleVersion = '1.6'
+}
+
+configurations {
+	bundle
+}
+compileJava{
+
+}
+
+jar {
+	baseName = "JavaServer"
+	from configurations.bundle.collect { it.isDirectory() ? it : zipTree(it)}
+	manifest {
+		attributes("Main-Class": "com.appsbywill.Server");
+	}
+}
+
+task all (dependsOn: [build])
