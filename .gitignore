@@ -5,6 +5,8 @@
 /.project
 /.classpath
 
+test.txt
+
 *.class
 *.swp
 *~
