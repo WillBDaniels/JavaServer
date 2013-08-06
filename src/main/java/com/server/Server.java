@@ -98,12 +98,12 @@ public class Server {
                         udpClient = new DatagramSocket(udpPort);
                         new ServerThread(udpClient);
                     }
-                    else if ((udpClient != null) && !udpClient.isClosed()){
+                    else if ((udpClient != null) && udpClient.isClosed()){
                             System.out.println("Listening for new UDP connections... on port: " + udpPort);
                             udpClient = new DatagramSocket(udpPort);
                             new ServerThread(udpClient);
                     }
-                    else if ((udpClient != null) && udpClient.isClosed())
+                    else if ((udpClient != null) && !udpClient.isClosed())
                         System.out.println("Looping and udpClient is  connected..");
                 } 
                            
