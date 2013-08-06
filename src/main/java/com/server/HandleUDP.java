@@ -4,10 +4,11 @@ import java.net.*;
 import java.io.*;
 
 class HandleUDP extends Thread{
-	private Socket client;
+	private DatagramSocket client;
 	private final int whichPort;
+	private boolean continueLooping = true;
 
-	public HandleUDP(Socket client, int whichPort){
+	public HandleUDP(DatagramSocket client, int whichPort){
 		this.whichPort = whichPort;
 		this.client = client;
 		this.start();
@@ -21,7 +22,7 @@ class HandleUDP extends Thread{
 		try{
 			client.close();
 		}
-		catch(IOException e){
+		catch(Exception e){
 			e.printStackTrace();
 		}
 
@@ -29,8 +30,13 @@ class HandleUDP extends Thread{
 
 	private void handleUpload(){
 		//TODO: UDP Upload code
+		continueLooping = false;
 	}
 	private void handleDownload(){
+		continueLooping = false;
 		//TODO: UDP Download code
+	}
+	public boolean continueLooping(){
+		return this.continueLooping;
 	}
 }
