@@ -127,7 +127,7 @@ InputStream ins;
     *
     *@param ins the basic client inputStream, to allow single byte reading. 
     */
-    public static void retrieveDocuments(InputStream ins){
+    public static void blackHole(InputStream ins){
         int i = 0;
         System.out.println("Waiting for awesome data");
         //make the byteBuffer and back it with a large enough byte array.
