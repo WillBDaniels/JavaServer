@@ -1,7 +1,7 @@
 /*
  * Created by: William Daniels
- * CS 460, 8 Feb 2012
- * Update version 1.0;
+ * 8 Feb 2012
+ * Update version 1.1;
  */
 
 package com.server;
@@ -11,26 +11,81 @@ import java.net.*;
 import java.util.StringTokenizer;
 import java.lang.StringBuilder;
 
+/**
+* This class acts as the basic port handler, and contains the 
+* primary server loop. All Port handling, and handing off to threads,
+* essentially happens here. 
+*
+*@author William Daniels
+*@version 1.1
+*/
 public class Server {
-
-    public static final int HTTP_PORT = 6666;
+    //initialize all of the ports this server will listen on.
+    private static final int HTTP_PORT = 3962;
+    private static final int UDP_UPLOAD_PORT = 6667;
+    private static final int UDP_DOWNLOAD_PORT = 9999;
+    private static final int TCP_UPLOAD_PORT = 8080;
+    private static final int TCP_DOWNLOAD_PORT = 8000;
     //initializes the ServerSocket
-    public ServerSocket getServer() throws Exception {
-        return new ServerSocket(HTTP_PORT);
+    public void startServer() {
+        new Thread(){ 
+            public void run(){
+                try{ 
+                spinupServerSocket(new ServerSocket(HTTP_PORT));
+                }catch(IOException e){
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+                new Thread(){ 
+            public void run(){
+                try{ 
+                spinupServerSocket(new ServerSocket(UDP_DOWNLOAD_PORT));
+                }catch(IOException e){
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+                new Thread(){ 
+            public void run(){
+                try{ 
+                spinupServerSocket(new ServerSocket(UDP_UPLOAD_PORT));
+                }catch(IOException e){
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+                new Thread(){ 
+            public void run(){
+                try{ 
+                spinupServerSocket(new ServerSocket(TCP_DOWNLOAD_PORT));
+                }catch(IOException e){
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+                new Thread(){ 
+            public void run(){
+                try{ 
+                spinupServerSocket(new ServerSocket(TCP_UPLOAD_PORT));
+                }catch(IOException e){
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+
     }
 
     //Accepts the Connection, processes the user
-    public void run() {
-        ServerSocket listen;
+    public void spinupServerSocket(ServerSocket listen) {
         try {
-            listen = getServer();
             while(true) {
                 System.out.println("Listening for new connections...");
                 Socket client = listen.accept();
-                ServerThread cc = new ServerThread(client);
+                ServerThread myServerThread = new ServerThread(client);
             }
         } catch(Exception e) {
-        System.out.println("Exception: "+e.getMessage());
+            System.out.println("Exception: "+e.getMessage());
         }
     }
 
