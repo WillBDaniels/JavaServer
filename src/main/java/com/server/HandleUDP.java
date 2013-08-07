@@ -128,7 +128,6 @@ class HandleUDP{
 class DumpData extends Thread{
 	private final static int MAXIMUM_PACKET_SIZE = 1400;
 	private final int BYTES_IN_MEGABYTES = 1048576;
-											819042
 
 	private InetAddress sendAddress;
 	private int port;
