@@ -91,25 +91,14 @@ public class Server {
             }
         }
         else{
-            try{
-                while (true){
-                    if (udpClient == null){
-                        System.out.println("Listening for new UDP connections... on port: " + udpPort);
-                        udpClient = new DatagramSocket(udpPort);
-                        new ServerThread(udpClient);
-                    }
-                    else if ((udpClient != null) && udpClient.isClosed()){
-                            System.out.println("Listening for new UDP connections... on port: " + udpPort);
-                            udpClient = new DatagramSocket(udpPort);
-                            new ServerThread(udpClient);
-                    }
-                    else if ((udpClient != null) && !udpClient.isClosed())
-                        System.out.println("Looping and udpClient is  connected..");
-                } 
-                           
-            }catch(IOException ex){
-                ex.printStackTrace();
-            }
+                try{
+                    System.out.println("Listening for new UDP Data... on port: " + udpPort);
+                    udpClient = new DatagramSocket(udpPort);
+                    new ServerThread(udpClient);
+                }catch(IOException ex){
+                    ex.printStackTrace();
+                }
+            
         }      
     }
 
