@@ -52,7 +52,7 @@ InputStream ins;
             if (request.contains("GET"))
                 dataDump(os);
             else if (request.contains("POST"))
-                blackHole(ins);
+                blackHole(ins, os);
             else 
                 client.close();
             // BufferedReader rd = new BufferedReader(is));
@@ -107,6 +107,8 @@ InputStream ins;
             }
             out.writeBytes("Content-Type: random/bytes\r\n\r\n");
         } catch (Exception e) {
+            e.printStackTrace();
+
             //write a standard error message out if something goes wrong, IE: IOException
             //or the client closes the connection, etc. etc. 
             out.writeBytes("<html><head><title>error</title></head><body>\r\n\r\n");
@@ -127,7 +129,7 @@ InputStream ins;
     *
     *@param ins the basic client inputStream, to allow single byte reading. 
     */
-    public static void blackHole(InputStream ins){
+    public static void blackHole(InputStream ins, DataOutputStream out) throws IOException{
         int i = 0;
         System.out.println("Waiting for awesome data");
         //make the byteBuffer and back it with a large enough byte array.
@@ -139,12 +141,23 @@ InputStream ins;
                 System.out.println("reading!");
                 ins.read(b);
                 buf.put(b);
+
+                out.writeBytes("HTTP/1.0 200 OK\r\n");
+                out.writeBytes("Content Length: " + BYTES_IN_MEGABYTES + "bytes\r\n");
+                out.writeBytes("File Contents: \r\n");
+                
                 Arrays.fill(b, (byte)0);
                 buf.clear();
             }
         }
         catch(IOException e){
             e.printStackTrace();
+
+            //Write error if there's an IOException
+            out.writeBytes("<html><head><title>error</title></head><body>\r\n\r\n");
+            out.writeBytes("HTTP/1.0 400 " + e.getMessage() + "\r\n");
+            out.writeBytes("Content-Type: text/html\r\n\r\n");
+            out.writeBytes("</body></html>");
         }
         finally{
             try{
