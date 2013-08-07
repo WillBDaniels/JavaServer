@@ -87,15 +87,17 @@ class HandleUDP extends Thread{
 			String ipAddress = new String(tempTwo);
 			ipAddress = ipAddress.trim();
 			ipAddress = ipAddress.substring(0, ipAddress.length());
-			client.receive(packet);
+
+			DatagramPacket newPacket = new DatagramPacket(new byte[6], 6);
+			client.receive(newPacket);
 			//port byte array converstion.
-			byte[] tempThree = packet.getData();
+			byte[] tempThree = newPacket.getData();
 			String port = new String(tempThree);
 			port = port.trim();
 			port = port.substring(0, port.length());
 			//try and make a new connection to the given port and IP address. 
-			System.out.println("ipaddress length: " + ipAddress.length() + "port length: " + port.length());
-			Thread.sleep(2000);
+			System.out.println("ipaddress: " + ipAddress + "port: " + Integer.parseInt(port));
+
 			DatagramSocket returnSocket = new DatagramSocket(new InetSocketAddress(ipAddress, Integer.parseInt(port)));
 			byte[] tempBuf = new byte[256];
 			//Write back a packet containing how many total bytes were written. 
