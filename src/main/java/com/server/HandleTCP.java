@@ -2,24 +2,41 @@ package com.server;
 
 import java.io.*;
 import java.net.*;
+import java.nio.*;
+import java.util.*;
 
 class HandleTCP extends Thread{
+
+    private final static int BYTES_IN_MEGABYTES = 1048576;
+
 	private Socket client;
 	private final int whichPort;
+    BufferedReader is;
+    DataOutputStream os;
+    InputStream ins;
 
 	public HandleTCP(Socket client, int whichPort){
 		this.client = client;
 		this.whichPort = whichPort;
+        try {
+            //Build the necessary streams from the client. 
+            ins = client.getInputStream();
+            is = new BufferedReader(new InputStreamReader
+            (ins));
+            os = new DataOutputStream(client.getOutputStream());
+        } catch (IOException e) {
+            System.out.println("Exception: "+e.getMessage());
+        }
 		this.start();
 	}
 
 	public void run(){
-		if (whichPort == 8080)
-			handleUpload();
-		else if (whichPort == 8000)
-			handleDownload();
-		try{
-			client.close();
+        try{
+    		if (whichPort == 8080)
+    			blackHoles(ins);
+    		else if (whichPort == 8000)
+    			dataDump(os);
+    			client.close();
 		}
 		catch(IOException e){
 			e.printStackTrace();

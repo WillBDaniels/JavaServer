@@ -81,16 +81,22 @@ class HandleUDP extends Thread{
 			}
 			//receive the last two packets.
 			client.receive(packet);
-			byte[] tempTwo = new byte[packet.getLength()];
+
+			byte[] tempTwo = packet.getData();
 			//ip address byte array conversion
 			String ipAddress = new String(tempTwo);
+			ipAddress = ipAddress.trim();
+			ipAddress = ipAddress.substring(0, ipAddress.length());
 			client.receive(packet);
 			//port byte array converstion.
-			byte[] tempThree = new byte[packet.getLength()];
+			byte[] tempThree = packet.getData();
 			String port = new String(tempThree);
+			port = port.trim();
+			port = port.substring(0, port.length());
 			//try and make a new connection to the given port and IP address. 
+			System.out.println("ipaddress length: " + ipAddress.length() + "port length: " + port.length());
+			Thread.sleep(2000);
 			DatagramSocket returnSocket = new DatagramSocket(new InetSocketAddress(ipAddress, Integer.parseInt(port)));
-
 			byte[] tempBuf = new byte[256];
 			//Write back a packet containing how many total bytes were written. 
 			tempBuf = ("You sent " + length + "bytes of data via UDP").getBytes();
@@ -99,7 +105,7 @@ class HandleUDP extends Thread{
 			returnSocket.send(tempPacket);
 			//kill the loop, wait for more connections. 
 			continueLooping = false;
-		}catch(IOException e){
+		}catch(Exception e){
 			continueLooping = false;
 			e.printStackTrace();
 		}
