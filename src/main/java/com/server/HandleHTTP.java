@@ -137,13 +137,14 @@ InputStream ins;
         ByteBuffer buf = ByteBuffer.allocate(BYTES_IN_MEGABYTES);
         try {
             //while the input stream has something available, keep filling, emptying and re-filling. 
-            while (ins.read() != -1){
+            bytesRead = ins.read();
+            while (bytesRead != -1){
                 System.out.println("reading!");
                 bytesRead = ins.read(b);
                 System.out.println("putting!");
                 buf.put(b);
 
-                System.out.println("responding at iteration: " + i);
+                System.out.println("responding at iteration: " + i + " \r\nI read " + bytesRead + " this time around.");
                 out.writeBytes("HTTP/1.0 200 OK\r\n");
                 out.writeBytes("Content Length: " + bytesRead + "bytes\r\n");
                 out.writeBytes("File Contents: \r\n");
@@ -152,6 +153,7 @@ InputStream ins;
                 buf.clear();
                 i++;
             }
+            System.out.println("All done receiving data!");
         }
         catch(IOException e){
             e.printStackTrace();
