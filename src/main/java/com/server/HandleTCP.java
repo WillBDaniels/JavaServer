@@ -5,6 +5,12 @@ import java.net.*;
 import java.nio.*;
 import java.util.*;
 
+/**
+ * This class to manage upload and download requests via TCP
+ *
+ * @author Christopher Jordan
+ * @version 1.1
+ */
 class HandleTCP extends Thread{
 
     private final static int BYTES_IN_MEGABYTES = 1048576;
@@ -15,6 +21,12 @@ class HandleTCP extends Thread{
     DataOutputStream os;
     InputStream ins;
 
+    /**
+     * Constructor for TCP Handler
+     *
+     * @param Socket "client" for connection
+     * @param Int "whichPort" for connection
+     */
 	public HandleTCP(Socket client, int whichPort){
 		this.client = client;
 		this.whichPort = whichPort;
@@ -31,6 +43,10 @@ class HandleTCP extends Thread{
 		this.start();
 	}
 
+	/**
+	 * Main method to manage TCP connections, checks port number and redirects
+	 * to the appropriate managing method
+	 */
 	public void run(){
 		try{
 			if (whichPort == 8080)
@@ -44,6 +60,14 @@ class HandleTCP extends Thread{
 		}
 	}
 
+	/**
+	 * Method to dump data onto the calling client
+	 * Dumps 100MB of random data
+	 *
+	 * @param DataOutputStream "out" that provides an outgoing connection
+     *       to the client. 
+     * @throws IOException to catch any read/write errors. 
+	 */
 	private void dataDump(DataOutputStream out) throws IOException {
 		double currentBytes = 0.0;
         int i = 0;
@@ -76,6 +100,13 @@ class HandleTCP extends Thread{
             out.close();
         }
 	}
+
+	/**
+	 * Method provides a dumping ground for data to test upload speeds
+	 *
+	 * @param InputStream "ins" provides input stream for data being uploaded
+	 *
+	 */
 	private void blackHole(InputStream ins){
 		int i = 0;
         System.out.println("Waiting for awesome data");

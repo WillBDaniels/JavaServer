@@ -11,8 +11,8 @@ import java.util.*;
 * Currently it ONLY checks for the first header to contain the word either GET or POST. if neither are encountered, 
 * it just closes the connecction. 
 *
-*@author William Daniels
-*@version 1.1
+* @author William Daniels
+* @version 1.1
 */
 class HandleHttp extends Thread{
 
@@ -26,7 +26,7 @@ InputStream ins;
     /**
     * The only constructor, requires you have a client.
     *
-    *@param client The client that is connected to the Http Port. 
+    * @param Socket "client" the client that is connected to the http Port.
     */
     public HandleHttp(Socket client) { 
         this.client = client;
@@ -41,8 +41,8 @@ InputStream ins;
         }
         this.start();
    }
-   /**The main method that breaks down all of the client input string (GET request, etc.)
-    *
+   /**
+    * The main method that breaks down all of the client input string (GET request, etc.)
     */ 
     public void run() {
         System.out.println("Checking HTTP Request...");
@@ -74,12 +74,12 @@ InputStream ins;
     }
 
     /**
-    * dumps 100 MB of data onto the client as fast as possible
-    *
-    *@param out a DataOutputStream that represents the outgoing connection
-    *       to the client. 
-    *@throws IOException to catch any read/write errors. 
-    */
+     * Dumps 100 MB of data onto the client as fast as possible
+     *
+     * @param out a DataOutputStream that represents the outgoing connection
+     *       to the client. 
+     * @throws IOException to catch any read/write errors. 
+     */
     public static void dataDump(DataOutputStream out) throws IOException {
         double currentBytes = 0.0;
         int i = 0;
