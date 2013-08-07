@@ -96,7 +96,6 @@ class HandleTCP extends Thread{
             //or the client closes the connection, etc. etc. 
             e.printStackTrace();
         } finally {
-            out.flush();
             out.close();
         }
 	}

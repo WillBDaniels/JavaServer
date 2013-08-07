@@ -116,7 +116,6 @@ InputStream ins;
             out.writeBytes("Content-Type: text/html\r\n\r\n");
             out.writeBytes("</body></html>");
         } finally {
-            out.flush();
             out.close();
         }
     }
@@ -131,6 +130,7 @@ InputStream ins;
     */
     public static void blackHole(InputStream ins, DataOutputStream out) throws IOException{
         int i = 0;
+        int bytesRead = 0;
         System.out.println("Waiting for awesome data");
         //make the byteBuffer and back it with a large enough byte array.
         byte[] b = new byte[BYTES_IN_MEGABYTES];
@@ -139,17 +139,18 @@ InputStream ins;
             //while the input stream has something available, keep filling, emptying and re-filling. 
             while (ins.read() != -1){
                 System.out.println("reading!");
-                ins.read(b);
+                bytesRead = ins.read(b);
                 System.out.println("putting!");
                 buf.put(b);
 
-                System.out.println("responding!");
+                System.out.println("responding at iteration: " + i);
                 out.writeBytes("HTTP/1.0 200 OK\r\n");
-                out.writeBytes("Content Length: " + BYTES_IN_MEGABYTES + "bytes\r\n");
+                out.writeBytes("Content Length: " + bytesRead + "bytes\r\n");
                 out.writeBytes("File Contents: \r\n");
                 
                 Arrays.fill(b, (byte)0);
                 buf.clear();
+                i++;
             }
         }
         catch(IOException e){
