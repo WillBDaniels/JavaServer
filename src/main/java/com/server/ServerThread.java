@@ -47,7 +47,6 @@ private DatagramSocket udpClient = null;
 				byte[] buf = new byte[256];
 				DatagramPacket packet = new DatagramPacket(buf, buf.length);
 				udpClient.receive(packet);
-				System.out.println("Sending client to handler at port: " + udpClient.getLocalPort());
 				switch(udpClient.getLocalPort()){
 					case 6667:
 						udpUpload();
@@ -78,6 +77,7 @@ private DatagramSocket udpClient = null;
 		while(continueUDP)
 			continueUDP = myudpHandler.continueLooping();
 		udpClient.close();
+		udpClient.disconnect();
 	}
 	private void udpDownload(){
 		System.out.println("Reached UDP Download");
@@ -85,6 +85,7 @@ private DatagramSocket udpClient = null;
 		while(continueUDP)
 			continueUDP = myudpHandler.continueLooping();
 		udpClient.close();
+		udpClient.disconnect();
 	}
 	private void httpHandler(){
 		new HandleHttp(client);

@@ -18,7 +18,7 @@ jar {
 	baseName = "JavaServer"
 	from configurations.bundle.collect { it.isDirectory() ? it : zipTree(it)}
 	manifest {
-		attributes("Main-Class": "com.appsbywill.ServerHandler");
+		attributes("Main-Class": "com.server.ServerHandler");
 	}
 }
 

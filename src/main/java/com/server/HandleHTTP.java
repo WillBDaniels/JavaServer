@@ -52,7 +52,7 @@ InputStream ins;
             if (request.contains("GET"))
                 dataDump(os);
             else if (request.contains("POST"))
-                retrieveDocuments(ins);
+                blackHole(ins);
             else 
                 client.close();
             // BufferedReader rd = new BufferedReader(is));
