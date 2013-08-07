@@ -140,8 +140,10 @@ InputStream ins;
             while (ins.read() != -1){
                 System.out.println("reading!");
                 ins.read(b);
+                System.out.println("putting!");
                 buf.put(b);
 
+                System.out.println("responding!");
                 out.writeBytes("HTTP/1.0 200 OK\r\n");
                 out.writeBytes("Content Length: " + BYTES_IN_MEGABYTES + "bytes\r\n");
                 out.writeBytes("File Contents: \r\n");
