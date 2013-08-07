@@ -19,6 +19,7 @@ class HandleTCP extends Thread{
 		this.client = client;
 		this.whichPort = whichPort;
         try {
+
             //Build the necessary streams from the client. 
             ins = client.getInputStream();
             is = new BufferedReader(new InputStreamReader
@@ -31,12 +32,12 @@ class HandleTCP extends Thread{
 	}
 
 	public void run(){
-        try{
-    		if (whichPort == 8080)
-    			blackHoles(ins);
-    		else if (whichPort == 8000)
-    			dataDump(os);
-    			client.close();
+		try{
+			if (whichPort == 8080)
+				blackHole(ins);
+			else if (whichPort == 8000)
+				dataDump(os);
+			client.close();
 		}
 		catch(IOException e){
 			e.printStackTrace();
@@ -75,7 +76,7 @@ class HandleTCP extends Thread{
             out.close();
         }
 	}
-	private void blackHoles(InputStream ins){
+	private void blackHole(InputStream ins){
 		int i = 0;
         System.out.println("Waiting for awesome data");
         //make the byteBuffer and back it with a large enough byte array.
