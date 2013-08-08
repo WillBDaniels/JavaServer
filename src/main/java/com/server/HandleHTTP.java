@@ -18,10 +18,11 @@ class HandleHttp extends Thread{
 
 //The number of bytes in a megabyte
 private final static int BYTES_IN_MEGABYTES = 1048576;
-Socket client;
-BufferedReader is;
-DataOutputStream os;
-InputStream ins;
+private Socket client;
+private BufferedReader is;
+private DataOutputStream os;
+private InputStream ins;
+private double contentLength = 0.0;
 
     /**
     * The only constructor, requires you have a client.
@@ -47,11 +48,12 @@ InputStream ins;
     public void run() {
         System.out.println("Checking HTTP Request...");
         try {
-            String request = is.readLine();
-            
-            if (request.contains("GET"))
+
+            String firstLine = is.readLine();
+            contentLength = getContentLength(is);
+            if (firstLine.contains("GET"))
                 dataDump(os);
-            else if (request.contains("POST"))
+            else if (firstLine.contains("POST"))
                 blackHole(ins, os);
             else 
                 client.close();
@@ -73,6 +75,26 @@ InputStream ins;
         }
     }
 
+
+    public double getContentLength(BufferedReader inStream){
+        Map<String, String> headerKeyPair = new HashMap<String,String>();
+
+        try {
+            String temp = inStream.readLine();
+            while ((temp.length()) > 2){
+                headerKeyPair.put(temp.substring(0, temp.indexOf(":")).trim(), temp.substring(temp.indexOf(":"), temp.length()));
+                temp = inStream.readLine();
+            }
+            System.out.println("length of the map: " + headerKeyPair.size());
+            System.out.println("Content-length value in the map..: " + headerKeyPair.get("Content-Length"));
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+        if (headerKeyPair.containsKey("Content-Length"))
+            return Double.parseDouble(headerKeyPair.get("Content-Length"));
+        else
+            return 0.0;
+    }
     /**
      * Dumps 100 MB of data onto the client as fast as possible
      *
@@ -150,8 +172,7 @@ InputStream ins;
             }
             System.out.println("responding at iteration: " + i + " \r\nI read " + bytesRead + " this time around.");
             out.writeBytes("HTTP/1.0 200 OK\r\n");
-            out.writeBytes("Content Length: " + bytesRead + "bytes\r\n");
-            out.writeBytes("File Contents: \r\n");
+            //out.writeBytes("Bytes Read: " + bytesRead + "bytes\r\n");
             System.out.println("All done receiving data!");
         }
         catch(IOException e){
