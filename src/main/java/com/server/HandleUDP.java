@@ -17,8 +17,9 @@ import java.util.*;
 *@version 1.1
 */
 class HandleUDP{
+	protected Map<String, Integer> addressTable;
 
-	private final static int MAXIMUM_PACKET_SIZE = 1400;
+	private final static int MAXIMUM_PACKET_SIZE = 1024 * 20;
 	private DatagramSocket client;
 	private final int whichPort;
 
@@ -54,10 +55,9 @@ class HandleUDP{
 	*
 	*/
 	private void uploadBlackHole(){
-		Map<String, Double> addressTable;
 		double length = 0.0;
 
-		addressTable = new HashMap<String, Double>();
+		addressTable = new HashMap<String, Integer>();
 		try{
 			//build a buffer for holding the packets. 
 			byte[] buf = new byte[MAXIMUM_PACKET_SIZE];
@@ -68,37 +68,33 @@ class HandleUDP{
 			//server, this is not the end of the world, but be aware. 
 			while(true){
 				client.receive(packet);
+				byte[] data = packet.getData();
 				String temp = packet.getSocketAddress().toString();
+
 				if (addressTable.get(temp) == null){
 					System.out.println("New Connection established");
-					addressTable.put(temp, (double)packet.getLength());
+					addressTable.put(temp, packet.getLength());
+				}
+				else{
+					int tempValue = addressTable.get(temp) + packet.getLength();
+					addressTable.put(temp, tempValue);
 
 				}
-				else{
-					addressTable.put(temp, addressTable.get(temp) + (double)packet.getLength());
-				}
+				//tempBuf = packet.getData();
+				//tempBufTwo = ("Well Hello back!").getBytes();
+				//DatagramPacket reSend = new DatagramPacket(tempBufTwo, tempBufTwo.length, packet.getAddress(), packet.getPort());
+				//client.send(reSend);
 				if (((char)packet.getData()[0]) == '0'){
 					System.out.println("About to kill connection");
-					DatagramSocket returnSocket = new DatagramSocket();
 					byte[] tempBuf = new byte[MAXIMUM_PACKET_SIZE];
 					//Write back a packet containing how many total bytes were written. 
-					tempBuf = ("0 You sent " + addressTable.get(packet.getSocketAddress()) + " bytes of data via UDP").getBytes();
-					DatagramPacket tempPacket = new DatagramPacket(tempBuf, tempBuf.length, packet.getSocketAddress());
-					System.out.println("Address I tried to send the data to: " + packet.getSocketAddress());
+					tempBuf = ("You sent " + addressTable.get(temp) + " bytes of data via UDP").getBytes();
+					DatagramPacket tempPacket = new DatagramPacket(tempBuf, tempBuf.length, packet.getAddress(), packet.getPort());
+					//System.out.println("Address I tried to send the data to: " + packet.getAddress() + packet.getPort());
 					//send the packet to the remote destination. 
-					returnSocket.send(tempPacket);
-					returnSocket.close();
-					returnSocket.disconnect();
+					client.send(tempPacket);
 					addressTable.remove(temp);
 				}
-				else{
-					byte[] tempBuf = new byte[packet.getLength()];
-					tempBuf = packet.getData();
-					tempBuf = ("Well Hello!").getBytes();
-					DatagramPacket reSend = new DatagramPacket(tempBuf, tempBuf.length, packet.getAddress(), packet.getPort());
-					client.send(reSend);
-				}
-				//This length variable for holding the aggregate amount of bytes thus far. 
 			}
 			
 
