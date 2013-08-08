@@ -132,7 +132,7 @@ InputStream ins;
         int i = 0;
         int bytesRead = 0;
         System.out.println("Waiting for awesome data");
-        DataInputStream myStream = new DataInputStream(ins)
+        DataInputStream myStream = new DataInputStream(ins);
         //make the byteBuffer and back it with a large enough byte array.
         byte[] b = new byte[BYTES_IN_MEGABYTES];
         ByteBuffer buf = ByteBuffer.allocate(BYTES_IN_MEGABYTES);
