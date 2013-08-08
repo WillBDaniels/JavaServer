@@ -69,32 +69,35 @@ class HandleUDP{
 			while(true){
 				client.receive(packet);
 				String temp = packet.getSocketAddress().toString();
-				System.out.println(addressTable.get(temp));
 				if (addressTable.get(temp) == null){
+					System.out.println("New Connection established");
 					addressTable.put(temp, (double)packet.getLength());
-					System.out.println(addressTable.get(temp));
 
 				}
 				else{
 					addressTable.put(temp, addressTable.get(temp) + (double)packet.getLength());
 				}
 				if (((char)packet.getData()[0]) == '0'){
+					System.out.println("About to kill connection");
 					DatagramSocket returnSocket = new DatagramSocket();
 					byte[] tempBuf = new byte[MAXIMUM_PACKET_SIZE];
 					//Write back a packet containing how many total bytes were written. 
-					tempBuf = ("0 You sent " + addressTable.get(packet.getSocketAddress()) + "bytes of data via UDP").getBytes();
+					tempBuf = ("0 You sent " + addressTable.get(packet.getSocketAddress()) + " bytes of data via UDP").getBytes();
 					DatagramPacket tempPacket = new DatagramPacket(tempBuf, tempBuf.length, packet.getSocketAddress());
+					System.out.println("Address I tried to send the data to: " + packet.getSocketAddress());
 					//send the packet to the remote destination. 
 					returnSocket.send(tempPacket);
 					returnSocket.close();
 					returnSocket.disconnect();
 					addressTable.remove(temp);
 				}
-				byte[] tempBuf = new byte[packet.getLength()];
-				tempBuf = packet.getData();
-				tempBuf = ("Well Hello!").getBytes();
-				DatagramPacket reSend = new DatagramPacket(tempBuf, tempBuf.length, packet.getAddress(), packet.getPort());
-				client.send(reSend);
+				else{
+					byte[] tempBuf = new byte[packet.getLength()];
+					tempBuf = packet.getData();
+					tempBuf = ("Well Hello!").getBytes();
+					DatagramPacket reSend = new DatagramPacket(tempBuf, tempBuf.length, packet.getAddress(), packet.getPort());
+					client.send(reSend);
+				}
 				//This length variable for holding the aggregate amount of bytes thus far. 
 			}
 			
