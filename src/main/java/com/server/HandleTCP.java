@@ -108,15 +108,16 @@ class HandleTCP extends Thread{
 	 */
 	private void blackHole(InputStream ins){
 		int i = 0;
+        DataInputStream myStream = new DataInputStream(ins);
         System.out.println("Waiting for awesome data");
         //make the byteBuffer and back it with a large enough byte array.
         byte[] b = new byte[BYTES_IN_MEGABYTES];
         ByteBuffer buf = ByteBuffer.allocate(BYTES_IN_MEGABYTES);
         try {
             //while the input stream has something available, keep filling, emptying and re-filling. 
-            while (ins.read() != -1){
+            while (myStream.read() != -1){
                 System.out.println("reading!");
-                ins.read(b);
+                myStream.read(b);
                 buf.put(b);
                 Arrays.fill(b, (byte)0);
                 buf.clear();
@@ -127,7 +128,7 @@ class HandleTCP extends Thread{
         }
         finally{
             try{
-                ins.close();
+                myStream.close();
             }
             catch(IOException ex){
                 ex.printStackTrace();

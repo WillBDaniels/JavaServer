@@ -132,27 +132,26 @@ InputStream ins;
         int i = 0;
         int bytesRead = 0;
         System.out.println("Waiting for awesome data");
+        DataInputStream myStream = new DataInputStream(ins)
         //make the byteBuffer and back it with a large enough byte array.
         byte[] b = new byte[BYTES_IN_MEGABYTES];
         ByteBuffer buf = ByteBuffer.allocate(BYTES_IN_MEGABYTES);
         try {
             //while the input stream has something available, keep filling, emptying and re-filling. 
-            bytesRead = ins.read();
+            bytesRead = myStream.read();
             while (bytesRead != -1){
                 System.out.println("reading!");
-                bytesRead = ins.read(b);
+                bytesRead = myStream.read(b);
                 System.out.println("putting!");
                 buf.put(b);
-
-                System.out.println("responding at iteration: " + i + " \r\nI read " + bytesRead + " this time around.");
-                out.writeBytes("HTTP/1.0 200 OK\r\n");
-                out.writeBytes("Content Length: " + bytesRead + "bytes\r\n");
-                out.writeBytes("File Contents: \r\n");
-                
                 Arrays.fill(b, (byte)0);
                 buf.clear();
                 i++;
             }
+            System.out.println("responding at iteration: " + i + " \r\nI read " + bytesRead + " this time around.");
+            out.writeBytes("HTTP/1.0 200 OK\r\n");
+            out.writeBytes("Content Length: " + bytesRead + "bytes\r\n");
+            out.writeBytes("File Contents: \r\n");
             System.out.println("All done receiving data!");
         }
         catch(IOException e){
@@ -167,6 +166,7 @@ InputStream ins;
         finally{
             try{
                 ins.close();
+                myStream.close();
             }
             catch(IOException ex){
                 ex.printStackTrace();
