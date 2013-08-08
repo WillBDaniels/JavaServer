@@ -76,13 +76,13 @@ private double contentLength = 0.0;
     }
 
 
-    public double getContentLength(BufferedReader inStream){
+    private double getContentLength(BufferedReader inStream){
         Map<String, String> headerKeyPair = new HashMap<String,String>();
 
         try {
             String temp = inStream.readLine();
             while ((temp.length()) > 2){
-                headerKeyPair.put(temp.substring(0, temp.indexOf(":")).trim(), temp.substring(temp.indexOf(":"), temp.length()));
+                headerKeyPair.put(temp.substring(0, temp.indexOf(":")).trim(), temp.substring(temp.indexOf(":") + 1, temp.length()));
                 temp = inStream.readLine();
             }
             System.out.println("length of the map: " + headerKeyPair.size());
@@ -102,7 +102,7 @@ private double contentLength = 0.0;
      *       to the client. 
      * @throws IOException to catch any read/write errors. 
      */
-    public static void dataDump(DataOutputStream out) throws IOException {
+    public void dataDump(DataOutputStream out) throws IOException {
         double currentBytes = 0.0;
         int i = 0;
         System.out.println("Data dumping...");
@@ -150,7 +150,7 @@ private double contentLength = 0.0;
     *
     *@param ins the basic client inputStream, to allow single byte reading. 
     */
-    public static void blackHole(InputStream ins, DataOutputStream out) throws IOException{
+    public void blackHole(InputStream ins, DataOutputStream out) throws IOException{
         int i = 0;
         int bytesRead = 0;
         System.out.println("Waiting for awesome data");
@@ -160,10 +160,9 @@ private double contentLength = 0.0;
         ByteBuffer buf = ByteBuffer.allocate(BYTES_IN_MEGABYTES);
         try {
             //while the input stream has something available, keep filling, emptying and re-filling. 
-            bytesRead = myStream.read();
-            while (bytesRead != -1){
+            while ( bytesRead < contentLength){
                 System.out.println("reading!");
-                bytesRead = myStream.read(b);
+                bytesRead += myStream.read(b);
                 System.out.println("putting!");
                 buf.put(b);
                 Arrays.fill(b, (byte)0);
