@@ -90,7 +90,6 @@ class HandleUDP{
 					//Write back a packet containing how many total bytes were written. 
 					tempBuf = ("You sent " + addressTable.get(temp) + " bytes of data via UDP").getBytes();
 					DatagramPacket tempPacket = new DatagramPacket(tempBuf, tempBuf.length, packet.getAddress(), packet.getPort());
-					//System.out.println("Address I tried to send the data to: " + packet.getAddress() + packet.getPort());
 					//send the packet to the remote destination. 
 					client.send(tempPacket);
 					addressTable.remove(temp);
@@ -111,11 +110,11 @@ class HandleUDP{
 			while(true){
 				client.receive(packet);
 				byte[] tempBuf = ("Get ready for 100 MB of fun!").getBytes();
+				System.out.println("I'm about to throw 100MB of the best data in the world at: " + packet.getAddress());
 				DatagramPacket sendPacket = new DatagramPacket(tempBuf, tempBuf.length, packet.getAddress(), packet.getPort());
 				client.send(sendPacket);
-				Thread.sleep(1000);
+				Thread.sleep(100);
 				(new DumpData(packet.getAddress(), packet.getPort(), client)).start();
-
 			}
 
 		}catch(Exception e){
