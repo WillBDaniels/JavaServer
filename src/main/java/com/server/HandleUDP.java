@@ -19,7 +19,7 @@ import java.util.*;
 class HandleUDP{
 	protected Map<String, TimeStampValue> addressTable;
 
-	private final static int TWO_MINUTES_IN_MILLISECONDS = 120000;
+	private final static int ONE_MINUTE_IN_MILLISECONDS = 60000;
 
 	private final static int MAXIMUM_PACKET_SIZE = 1024 * 20;
 	private DatagramSocket client;
@@ -97,7 +97,7 @@ class HandleUDP{
 
 				//check the time of all current values in the addressTablem, delete all over 2 minutes old.
 				for (String iteration: addressTable.keySet()){
-					if ((addressTable.get(iteration).timeStamp - System.currentTimeMillis()) > TWO_MINUTES_IN_MILLISECONDS)
+					if ((addressTable.get(iteration).timeStamp - System.currentTimeMillis()) > ONE_MINUTE_IN_MILLISECONDS)
 						addressTable.remove(iteration);
 				}
 			}
