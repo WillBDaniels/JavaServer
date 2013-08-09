@@ -21,7 +21,7 @@ class HandleUDP{
 
 	private final static int ONE_MINUTE_IN_MILLISECONDS = 60000;
 
-	private final static int MAXIMUM_PACKET_SIZE = 1024 * 20;
+	private final static int MAXIMUM_PACKET_SIZE = 1500;
 	private DatagramSocket client;
 	private final int whichPort;
 
@@ -147,7 +147,7 @@ class TimeStampValue {
 }
 
 class DumpData extends Thread{
-	private final static int MAXIMUM_PACKET_SIZE = 1400;
+	private final static int MAXIMUM_PACKET_SIZE = 1500;
 	private final int BYTES_IN_MEGABYTES = 1048576;
 	private final static int MILLI_IN_SECONDS = 1000;
 

@@ -119,6 +119,7 @@ private double contentLength = 0.0;
             out.writeBytes("Content Length: " + BYTES_IN_MEGABYTES * 100 + "bytes\r\n");
             out.writeBytes("File Contents: \r\n");
             //Keep writing the same buffer over and over until we've written 100 MB
+            System.out.println("Writing 100 MB");
             while (currentBytes <= (BYTES_IN_MEGABYTES * 100)){
                 out.write(buf.array(), 0, BYTES_IN_MEGABYTES);
                 buf.clear();
@@ -126,12 +127,12 @@ private double contentLength = 0.0;
                 buf.flip();
                 i++;
                 currentBytes = (i * BYTES_IN_MEGABYTES);
-                System.out.println("current iteration:" +  i);
             }
+            System.out.println("Finished writing 100 MB to HTTP");
             out.writeBytes("Content-Type: random/bytes\r\n\r\n");
         } catch (Exception e) {
             e.printStackTrace();
-
+            System.out.println("Sending error response");
             //write a standard error message out if something goes wrong, IE: IOException
             //or the client closes the connection, etc. etc. 
             out.writeBytes("<html><head><title>error</title></head><body>\r\n\r\n");
@@ -154,30 +155,27 @@ private double contentLength = 0.0;
     public void blackHole(InputStream ins, DataOutputStream out) throws IOException{
         int i = 0;
         int bytesRead = 0;
-        System.out.println("Ready to absorb data");
         DataInputStream myStream = new DataInputStream(ins);
         //make the byteBuffer and back it with a large enough byte array.
         byte[] b = new byte[BYTES_IN_MEGABYTES];
         ByteBuffer buf = ByteBuffer.allocate(BYTES_IN_MEGABYTES);
         try {
+            System.out.println("Entering dataAbsorbing loop");
             //while the input stream has something available, keep filling, emptying and re-filling. 
             while ( bytesRead < contentLength){
-                System.out.println("Reading data...");
                 bytesRead += myStream.read(b);
-                System.out.println("Swallowing data...");
                 buf.put(b);
                 Arrays.fill(b, (byte)0);
                 buf.clear();
                 i++;
             }
-            System.out.println("Responding at iteration: " + i + " \r\nRead " + bytesRead + " bytes");
             out.writeBytes("HTTP/1.0 200 OK\r\n");
             //out.writeBytes("Bytes Read: " + bytesRead + "bytes\r\n");
             System.out.println("Done receiving data");
         }
         catch(IOException e){
             e.printStackTrace();
-
+            System.out.println("Sending error response");
             //Write error if there's an IOException
             out.writeBytes("<html><head><title>error</title></head><body>\r\n\r\n");
             out.writeBytes("HTTP/1.0 400 " + e.getMessage() + "\r\n");

@@ -88,8 +88,8 @@ class HandleTCP extends Thread{
                 buf.flip();
                 i++;
                 currentBytes = (i * BYTES_IN_MEGABYTES);
-                System.out.println("current iteration:" +  i);
             }
+            System.out.println("Finished writing 100 MB");
             out.writeBytes("Content-Type: random/bytes\r\n\r\n");
         } catch (Exception e) {
             //write a standard error message out if something goes wrong, IE: IOException
@@ -116,12 +116,12 @@ class HandleTCP extends Thread{
         try {
             //while the input stream has something available, keep filling, emptying and re-filling. 
             while (myStream.read() != -1){
-                System.out.println("reading!");
                 myStream.read(b);
                 buf.put(b);
                 Arrays.fill(b, (byte)0);
                 buf.clear();
             }
+            System.out.println("Finished reading TCP");
         }
         catch(IOException e){
             e.printStackTrace();
