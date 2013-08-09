@@ -51,7 +51,9 @@ private double contentLength = 0.0;
 
             String firstLine = is.readLine();
             contentLength = getContentLength(is);
-            if (firstLine.contains("GET"))
+            if (firstLine.contains("GET /ping"))
+                pingTest(os);
+            else if (firstLine.contains("GET"))
                 dataDump(os);
             else if (firstLine.contains("POST"))
                 blackHole(ins, os);
@@ -85,8 +87,7 @@ private double contentLength = 0.0;
                 headerKeyPair.put(temp.substring(0, temp.indexOf(":")).trim(), temp.substring(temp.indexOf(":") + 1, temp.length()));
                 temp = inStream.readLine();
             }
-            System.out.println("length of the map: " + headerKeyPair.size());
-            System.out.println("Content-length value in the map..: " + headerKeyPair.get("Content-Length"));
+            System.out.println("Content-Length: " + headerKeyPair.get("Content-Length"));
         }catch(IOException e){
             e.printStackTrace();
         }
@@ -105,7 +106,7 @@ private double contentLength = 0.0;
     public void dataDump(DataOutputStream out) throws IOException {
         double currentBytes = 0.0;
         int i = 0;
-        System.out.println("Data dumping...");
+        System.out.println("Dumping data");
         try {
             //make a byte buffer of the proper size, fill it with a random byte array.
             ByteBuffer buf = ByteBuffer.allocate(BYTES_IN_MEGABYTES);
@@ -153,7 +154,7 @@ private double contentLength = 0.0;
     public void blackHole(InputStream ins, DataOutputStream out) throws IOException{
         int i = 0;
         int bytesRead = 0;
-        System.out.println("Waiting for awesome data");
+        System.out.println("Ready to absorb data");
         DataInputStream myStream = new DataInputStream(ins);
         //make the byteBuffer and back it with a large enough byte array.
         byte[] b = new byte[BYTES_IN_MEGABYTES];
@@ -161,18 +162,18 @@ private double contentLength = 0.0;
         try {
             //while the input stream has something available, keep filling, emptying and re-filling. 
             while ( bytesRead < contentLength){
-                System.out.println("reading!");
+                System.out.println("Reading data...");
                 bytesRead += myStream.read(b);
-                System.out.println("putting!");
+                System.out.println("Swallowing data...");
                 buf.put(b);
                 Arrays.fill(b, (byte)0);
                 buf.clear();
                 i++;
             }
-            System.out.println("responding at iteration: " + i + " \r\nI read " + bytesRead + " this time around.");
+            System.out.println("Responding at iteration: " + i + " \r\nRead " + bytesRead + " bytes");
             out.writeBytes("HTTP/1.0 200 OK\r\n");
             //out.writeBytes("Bytes Read: " + bytesRead + "bytes\r\n");
-            System.out.println("All done receiving data!");
+            System.out.println("Done receiving data");
         }
         catch(IOException e){
             e.printStackTrace();
@@ -191,6 +192,26 @@ private double contentLength = 0.0;
             catch(IOException ex){
                 ex.printStackTrace();
             }
+        }
+    }
+
+    public void pingTest(DataOutputStream out) throws IOException
+    {
+        try
+        {
+            System.out.println("Responding to ping...");
+            out.writeBytes("HTTP/1.0 200 OK\r\n");
+            System.out.println("Done");
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+
+            //Write error if there's an IOException
+            out.writeBytes("<html><head><title>error</title></head><body>\r\n\r\n");
+            out.writeBytes("HTTP/1.0 400 " + e.getMessage() + "\r\n");
+            out.writeBytes("Content-Type: text/html\r\n\r\n");
+            out.writeBytes("</body></html>");
         }
     }
 }
