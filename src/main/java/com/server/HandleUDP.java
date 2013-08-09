@@ -149,6 +149,8 @@ class TimeStampValue {
 class DumpData extends Thread{
 	private final static int MAXIMUM_PACKET_SIZE = 1400;
 	private final int BYTES_IN_MEGABYTES = 1048576;
+	private final static int MILLI_IN_SECONDS = 1000;
+
 
 	private InetAddress sendAddress;
 	private int port;
@@ -172,10 +174,20 @@ class DumpData extends Thread{
         		totalBytes = totalBytes + MAXIMUM_PACKET_SIZE;
 
 	        }
-	        b = ("All done!  :) ").getBytes();
-	        DatagramPacket sendPacketTwo = new DatagramPacket(b, b.length, sendAddress, port);
-	        client.send(sendPacketTwo);
-
+	        System.out.println("I think i just sent this: " + totalBytes);
+			byte[] buf = new byte[MAXIMUM_PACKET_SIZE];
+			//make a new packet object
+			DatagramPacket packet = new DatagramPacket(buf, buf.length);
+	        boolean continueOrNot = true;
+	        long baselineTime = System.currentTimeMillis();
+	        while (continueOrNot){
+		        b = ("0").getBytes();
+		        DatagramPacket sendPacketTwo = new DatagramPacket(b, b.length, sendAddress, port);
+		        client.send(sendPacketTwo);
+		        if ((System.currentTimeMillis() - baselineTime) > (MILLI_IN_SECONDS * 2)){
+		        	continueOrNot = false;
+		        }
+		    }
         }catch(IOException e){
     		e.printStackTrace();
     	}
