@@ -80,6 +80,7 @@ class HandleUDP{
 				}
 				else{
 					addressTable.get(temp).value += packet.getLength();
+					addressTable.get(temp).timeStamp = System.currentTimeMillis();
 				}
 				//tempBuf = packet.getData();
 				//tempBufTwo = ("Well Hello back!").getBytes();
