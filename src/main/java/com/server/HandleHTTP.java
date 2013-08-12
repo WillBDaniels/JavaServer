@@ -159,7 +159,6 @@ public Map<String, String> headerKeyPair = new HashMap<String,String>();
     *@param ins the basic client inputStream, to allow single byte reading. 
     */
     public void blackHole(InputStream ins, DataOutputStream out) throws IOException{
-        int i = 0;
         int bytesRead = 0;
         DataInputStream myStream = new DataInputStream(ins);
         //make the byteBuffer and back it with a large enough byte array.
@@ -169,11 +168,17 @@ public Map<String, String> headerKeyPair = new HashMap<String,String>();
             System.out.println("Entering dataAbsorbing loop");
             //while the input stream has something available, keep filling, emptying and re-filling. 
             while ( bytesRead < contentLength){
-                bytesRead += myStream.read(b);
+                int read = myStream.read(b);
+                if (read == -1)
+                {
+                    System.out.println("Read -1, end of stream");
+                    break;
+                }
+                bytesRead += read;
+                System.out.println("Read " + read + " this time (" + bytesRead + " total so far)");
                 buf.put(b);
                 Arrays.fill(b, (byte)0);
                 buf.clear();
-                i++;
             }
             out.writeBytes("HTTP/1.0 200 OK\r\n");
             //out.writeBytes("Bytes Read: " + bytesRead + "bytes\r\n");
