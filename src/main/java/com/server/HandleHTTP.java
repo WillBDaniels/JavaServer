@@ -23,6 +23,8 @@ private BufferedReader is;
 private DataOutputStream os;
 private InputStream ins;
 private double contentLength = 0.0;
+public Map<String, String> headerKeyPair = new HashMap<String,String>();
+
 
     /**
     * The only constructor, requires you have a client.
@@ -79,11 +81,11 @@ private double contentLength = 0.0;
 
 
     private double getContentLength(BufferedReader inStream){
-        Map<String, String> headerKeyPair = new HashMap<String,String>();
 
         try {
             String temp = inStream.readLine();
             while ((temp.length()) > 2){
+                //Parse up all of the headers and put them in the map
                 headerKeyPair.put(temp.substring(0, temp.indexOf(":")).trim(), temp.substring(temp.indexOf(":") + 1, temp.length()));
                 temp = inStream.readLine();
             }
@@ -120,7 +122,7 @@ private double contentLength = 0.0;
             out.writeBytes("File Contents: \r\n");
             //Keep writing the same buffer over and over until we've written 100 MB
             System.out.println("Writing 100 MB");
-            while (currentBytes <= (BYTES_IN_MEGABYTES * 100)){
+            while (currentBytes <= (Double.parseDouble(headerKeyPair.get("Size")))){
                 out.write(buf.array(), 0, BYTES_IN_MEGABYTES);
                 buf.clear();
                 buf.put(b);
