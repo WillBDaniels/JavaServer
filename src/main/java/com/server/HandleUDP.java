@@ -21,7 +21,7 @@ class HandleUDP{
 
 	private final static int ONE_MINUTE_IN_MILLISECONDS = 60000;
 
-	private final static int MAXIMUM_PACKET_SIZE = 1500;
+	private final static int MAXIMUM_PACKET_SIZE = 30 * 1024;
 	private DatagramSocket client;
 	private final int whichPort;
 
