@@ -122,7 +122,11 @@ public Map<String, String> headerKeyPair = new HashMap<String,String>();
             out.writeBytes("File Contents: \r\n");
             //Keep writing the same buffer over and over until we've written 100 MB
             System.out.println("Writing 100 MB");
-            while (currentBytes <= (Double.parseDouble(headerKeyPair.get("Size")))){
+            double size = 0;
+            if (headerKeyPair.get("Size") != null){
+                size = Double.parseDouble(headerKeyPair.get("Size"));
+            }
+            while (currentBytes <= (size)){
                 out.write(buf.array(), 0, BYTES_IN_MEGABYTES);
                 buf.clear();
                 buf.put(b);
