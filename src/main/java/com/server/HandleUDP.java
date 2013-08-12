@@ -119,12 +119,15 @@ class HandleUDP{
 			DatagramPacket packet = new DatagramPacket(buf, buf.length);
 			while(true){
 				client.receive(packet);
-				byte[] tempBuf = ("Get ready for 100 MB of fun!").getBytes();
-				System.out.println("I'm about to throw 100MB of the best data in the world at: " + packet.getAddress());
-				DatagramPacket sendPacket = new DatagramPacket(tempBuf, tempBuf.length, packet.getAddress(), packet.getPort());
-				client.send(sendPacket);
+				byte[] data = packet.getData();
+				if (((char)data[0]) == '1'){
+					byte[] tempBuf = ("Get ready for 100 MB of fun!").getBytes();
+					System.out.println("I'm about to throw 100MB of the best data in the world at: " + packet.getAddress());
+					DatagramPacket sendPacket = new DatagramPacket(tempBuf, tempBuf.length, packet.getAddress(), packet.getPort());
+					client.send(sendPacket);
+					(new DumpData(packet.getAddress(), packet.getPort(), client)).start();
+				}
 				Thread.sleep(100);
-				(new DumpData(packet.getAddress(), packet.getPort(), client)).start();
 			}
 
 		}catch(Exception e){
@@ -150,7 +153,7 @@ class TimeStampValue {
 }
 
 class DumpData extends Thread{
-	private final static int MAXIMUM_PACKET_SIZE = 1500;
+	private final static int MAXIMUM_PACKET_SIZE = 30 * 1024;
 	private final int BYTES_IN_MEGABYTES = 1048576;
 	private final static int MILLI_IN_SECONDS = 1000;
 
@@ -176,7 +179,7 @@ class DumpData extends Thread{
 	        while ( totalBytes < (BYTES_IN_MEGABYTES * 100)){
         		client.send(sendPacket);
         		totalBytes = totalBytes + MAXIMUM_PACKET_SIZE;
-
+        		System.out.println("Total bytes so far: " + totalBytes + " out of :" + (BYTES_IN_MEGABYTES * 100));
 	        }
 	        System.out.println("I think i just sent this: " + totalBytes);
 			byte[] buf = new byte[MAXIMUM_PACKET_SIZE];
@@ -192,9 +195,10 @@ class DumpData extends Thread{
 		        	continueOrNot = false;
 		        }
 		    }
-        }catch(IOException e){
+        }catch(Exception e){
     		e.printStackTrace();
     	}
 
 	}
+
 }
