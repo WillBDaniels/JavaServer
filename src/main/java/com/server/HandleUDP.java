@@ -17,12 +17,13 @@ import java.util.*;
 *@version 1.1
 */
 class HandleUDP{
-	protected Map<String, TimeStampValue> addressTable;
 
 	private final static int ONE_MINUTE_IN_MILLISECONDS = 60000;
 
 	private final static int MAXIMUM_PACKET_SIZE = 30 * 1024;
-	private DatagramSocket client;
+	
+  private final Map<String, TimeStampValue> addressTable;
+	private final DatagramSocket client;
 	private final int whichPort;
 
 
@@ -35,6 +36,8 @@ class HandleUDP{
 	public HandleUDP(DatagramSocket client, int whichPort){
 		this.whichPort = whichPort;
 		this.client = client;
+    addressTable = new HashMap<String, TimeStampValue>();
+    
 		run();
 	}
 
@@ -57,9 +60,6 @@ class HandleUDP{
 	*
 	*/
 	private void uploadBlackHole(){
-		double length = 0.0;
-
-		addressTable = new HashMap<String, TimeStampValue>();
 		try{
 			//build a buffer for holding the packets. 
 			byte[] buf = new byte[MAXIMUM_PACKET_SIZE];
@@ -70,23 +70,24 @@ class HandleUDP{
 			//server, this is not the end of the world, but be aware. 
 			while(true){
 				client.receive(packet);
-				TimeStampValue compoundTimeValue = new TimeStampValue(packet.getLength(), System.currentTimeMillis());
 				byte[] data = packet.getData();
 				String temp = packet.getSocketAddress().toString();
 
-				if (addressTable.get(temp) == null){
+				TimeStampValue tsValue = addressTable.get(temp);
+				if (tsValue == null){
 					System.out.println("New Connection established");
-					addressTable.put(temp, compoundTimeValue);
+					tsValue = new TimeStampValue(packet.getLength(), System.currentTimeMillis());
+					addressTable.put(temp, tsValue);
 				}
 				else{
-					addressTable.get(temp).value += packet.getLength();
-					addressTable.get(temp).timeStamp = System.currentTimeMillis();
+					tsValue.value += packet.getLength();
+					tsValue.timeStamp = System.currentTimeMillis();
 				}
 				//tempBuf = packet.getData();
 				//tempBufTwo = ("Well Hello back!").getBytes();
 				//DatagramPacket reSend = new DatagramPacket(tempBufTwo, tempBufTwo.length, packet.getAddress(), packet.getPort());
 				//client.send(reSend);
-				if (((char)packet.getData()[0]) == '0'){
+				if (((char)data[0]) == '0'){
 					System.out.println("About to send connection information to: " + packet.getAddress());
 					byte[] tempBuf = new byte[MAXIMUM_PACKET_SIZE];
 					//Write back a packet containing how many total bytes were written. 
@@ -97,14 +98,16 @@ class HandleUDP{
 				}
 
 				//check the time of all current values in the addressTablem, delete all over 2 minutes old.
-				for (String iteration: addressTable.keySet()){
-					if ((addressTable.get(iteration).timeStamp - System.currentTimeMillis()) > ONE_MINUTE_IN_MILLISECONDS)
-						addressTable.remove(iteration);
+				Iterator<TimeStampValue> it = addressTable.values().iterator();
+				while (it.hasNext()) {
+          if ((System.currentTimeMillis() - it.next().timeStamp) > ONE_MINUTE_IN_MILLISECONDS * 2) {
+            it.remove();  // must use it.remove to prevent ConcurrentModificationException
+          }
 				}
 			}
 			
 
-		}catch(Exception e){
+		}catch(IOException e){
 			e.printStackTrace();
 		}
 	}
@@ -163,6 +166,7 @@ class DumpData extends Thread{
 		this.client = client;
 	}
 
+	@Override
 	public void run(){
 		try{
 			double totalBytes = 0.0;
