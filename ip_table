@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+
+#when porting over to the full server in LA, don't forget to configure this table properly.
+
+ 
+ip_addresses=" 192.168.50.104"
+for ip_address in ${ip_addresses}; do
+  iptables -t nat -A OUTPUT -d ${ip_address} -p tcp --dport 443 -j DNAT --to-destination ${ip_address}:8000
+  iptables -t nat -A PREROUTING -d ${ip_address} -p tcp --dport 443 -j DNAT --to-destination ${ip_address}:8000
+  echo "setting up the routing for: " $ip_address
+done
+
+ip_addresses=" 192.168.12.96"
+for ip_address in ${ip_addresses}; do
+  iptables -t nat -A OUTPUT -d ${ip_address} -p tcp --dport 443 -j DNAT --to-destination ${ip_address}:8080
+  iptables -t nat -A PREROUTING -d ${ip_address} -p tcp --dport 443 -j DNAT --to-destination ${ip_address}:8080
+done
+
+ip_addresses=" 192.168.12.48"
+for ip_address in ${ip_addresses}; do
+  iptables -t nat -A OUTPUT -d ${ip_address} -p tcp --dport 443 -j DNAT --to-destination ${ip_address}:3962
+  iptables -t nat -A PREROUTING -d ${ip_address} -p tcp --dport 443 -j DNAT --to-destination ${ip_address}:3962
+done
+
+ip_addresses=" 192.168.12.52"
+for ip_address in ${ip_addresses}; do
+  iptables -t nat -A OUTPUT -d ${ip_address} -p udp --dport 443 -j DNAT --to-destination ${ip_address}:9999
+  iptables -t nat -A PREROUTING -d ${ip_address} -p udp --dport 443 -j DNAT --to-destination ${ip_address}:9999
+done
+
+ip_addresses=" 192.168.12.106"
+for ip_address in ${ip_addresses}; do
+  iptables -t nat -A OUTPUT -d ${ip_address} -p udp --dport 443 -j DNAT --to-destination ${ip_address}:6001
+  iptables -t nat -A PREROUTING -d ${ip_address} -p udp --dport 443 -j DNAT --to-destination ${ip_address}:6001
+done
