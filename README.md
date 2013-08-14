@@ -18,15 +18,24 @@ ex: if my available ip addresses are: 192.168.0.0 and 192.168.0.2 my iptables ro
 
 ip_addresses=" 192.168.0.0"
 
-for ip_address in ${ip_addresses}; do\r\n
-  iptables -t nat -A OUTPUT -d ${ip_address} -p tcp --dport 443 -j DNAT --to-destination ${ip_address}:8000\r\n
-  iptables -t nat -A PREROUTING -d ${ip_address} -p tcp --dport 443 -j DNAT --to-destination ${ip_address}:8000\r\n
-  echo "setting up the routing for: " $ip_address
-done
-ip_addresses=" 192.168.0.2"
 for ip_address in ${ip_addresses}; do
+
+  iptables -t nat -A OUTPUT -d ${ip_address} -p tcp --dport 443 -j DNAT --to-destination ${ip_address}:8000
+
+  iptables -t nat -A PREROUTING -d ${ip_address} -p tcp --dport 443 -j DNAT --to-destination ${ip_address}:8000
+
+  echo "setting up the routing for: " $ip_address
+
+done
+
+ip_addresses=" 192.168.0.2"
+
+for ip_address in ${ip_addresses}; do
+
   iptables -t nat -A OUTPUT -d ${ip_address} -p tcp --dport 443 -j DNAT --to-destination ${ip_address}:8080
+
   iptables -t nat -A PREROUTING -d ${ip_address} -p tcp --dport 443 -j DNAT --to-destination ${ip_address}:8080
+  
 done
 
 This gives me (and you!) the ability to connect to either port 8000 (TCP Download for the server) or port 8080 (tcp upload) by simply connecting to the proper IP address respectively. 
