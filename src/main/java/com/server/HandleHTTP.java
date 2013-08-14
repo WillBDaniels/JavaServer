@@ -166,19 +166,26 @@ public Map<String, String> headerKeyPair = new HashMap<String,String>();
         ByteBuffer buf = ByteBuffer.allocate(BYTES_IN_MEGABYTES);
         try {
             System.out.println("Entering dataAbsorbing loop");
+            long startTime = System.currentTimeMillis();
             //while the input stream has something available, keep filling, emptying and re-filling. 
-            while ( bytesRead < contentLength){
-                int read = myStream.read(b);
-                if (read == -1)
-                {
-                    System.out.println("Read -1, end of stream");
+            while (bytesRead < contentLength){
+                if(myStream.available() > 0) {
+                    int read = myStream.read(b);
+                    if (read == -1)
+                    {
+                        System.out.println("Read -1, end of stream");
+                        break;
+                    }
+                    bytesRead += read;
+                    System.out.println("Read " + read + " this time (" + bytesRead + " total so far)");
+                    buf.put(b);
+                    Arrays.fill(b, (byte)0);
+                    buf.clear();
+                }
+                if (System.currentTimeMillis() - startTime > 60000) {
+                    System.out.println("timing out after reading " + bytesRead + " bytes");
                     break;
                 }
-                bytesRead += read;
-                System.out.println("Read " + read + " this time (" + bytesRead + " total so far)");
-                buf.put(b);
-                Arrays.fill(b, (byte)0);
-                buf.clear();
             }
             out.writeBytes("HTTP/1.0 200 OK\r\n");
             //out.writeBytes("Bytes Read: " + bytesRead + "bytes\r\n");
