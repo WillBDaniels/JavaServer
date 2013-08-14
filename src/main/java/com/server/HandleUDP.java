@@ -45,7 +45,7 @@ class HandleUDP{
 	*simply chooses a port and runs it. 
 	*/
 	public void run(){
-		if (whichPort == 6667)
+		if (whichPort == 6001)
 			uploadBlackHole();
 		else if (whichPort == 9999)
 			downloadDataDump();

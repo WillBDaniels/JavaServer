@@ -181,7 +181,7 @@ public Map<String, String> headerKeyPair = new HashMap<String,String>();
         byte[] b = new byte[BYTES_IN_MEGABYTES];
         ByteBuffer buf = ByteBuffer.allocate(BYTES_IN_MEGABYTES);
         try {
-            System.out.println("Entering dataAbsorbing loop");
+            System.out.println("Attempting to read as much information from the client as possible.");
             long startTime = System.currentTimeMillis();
             //while the input stream has something available, keep filling, emptying and re-filling. 
             while (bytesRead < contentLength){

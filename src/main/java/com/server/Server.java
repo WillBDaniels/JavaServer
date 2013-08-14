@@ -22,7 +22,7 @@ import java.lang.StringBuilder;
 public class Server {
     //initialize all of the ports this server will listen on.
     private static final int HTTP_PORT = 3962;
-    private static final int UDP_UPLOAD_PORT = 6667;
+    private static final int UDP_UPLOAD_PORT = 6001;
     private static final int UDP_DOWNLOAD_PORT = 9999;
     private static final int TCP_UPLOAD_PORT = 8080;
     private static final int TCP_DOWNLOAD_PORT = 8000;
