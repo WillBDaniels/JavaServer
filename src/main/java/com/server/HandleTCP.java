@@ -71,7 +71,6 @@ class HandleTCP extends Thread{
 	private void dataDump(DataOutputStream out) throws IOException {
 		double currentBytes = 0.0;
         int i = 0;
-        System.out.println("Data dumping...");
         try {
             //make a byte buffer of the proper size, fill it with a random byte array.
             ByteBuffer buf = ByteBuffer.allocate(BYTES_IN_MEGABYTES);
@@ -109,7 +108,6 @@ class HandleTCP extends Thread{
 	private void blackHole(InputStream ins){
 		int i = 0;
         DataInputStream myStream = new DataInputStream(ins);
-        System.out.println("Waiting for awesome data");
         //make the byteBuffer and back it with a large enough byte array.
         byte[] b = new byte[BYTES_IN_MEGABYTES];
         ByteBuffer buf = ByteBuffer.allocate(BYTES_IN_MEGABYTES);

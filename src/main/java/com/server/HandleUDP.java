@@ -75,7 +75,7 @@ class HandleUDP{
 
 				TimeStampValue tsValue = addressTable.get(temp);
 				if (tsValue == null){
-					System.out.println("New Connection established");
+					System.out.println("New UDP Connection established");
 					tsValue = new TimeStampValue(packet.getLength(), System.currentTimeMillis());
 					addressTable.put(temp, tsValue);
 				}
@@ -88,7 +88,6 @@ class HandleUDP{
 				//DatagramPacket reSend = new DatagramPacket(tempBufTwo, tempBufTwo.length, packet.getAddress(), packet.getPort());
 				//client.send(reSend);
 				if (((char)data[0]) == '0'){
-					System.out.println("About to send connection information to: " + packet.getAddress());
 					byte[] tempBuf = new byte[MAXIMUM_PACKET_SIZE];
 					//Write back a packet containing how many total bytes were written. 
 					tempBuf = ("You sent " + addressTable.get(temp).value + " bytes of data via UDP\r\n").getBytes();
@@ -179,9 +178,7 @@ class DumpData extends Thread{
 	        while ( totalBytes < (BYTES_IN_MEGABYTES * 100)){
         		client.send(sendPacket);
         		totalBytes = totalBytes + MAXIMUM_PACKET_SIZE;
-        		System.out.println("Total bytes so far: " + totalBytes + " out of :" + (BYTES_IN_MEGABYTES * 100));
 	        }
-	        System.out.println("I think i just sent this: " + totalBytes);
 			byte[] buf = new byte[MAXIMUM_PACKET_SIZE];
 			//make a new packet object
 			DatagramPacket packet = new DatagramPacket(buf, buf.length);

@@ -87,9 +87,9 @@ public Map<String, String> headerKeyPair = new HashMap<String,String>();
             while ((temp.length()) > 2){
                 //Parse up all of the headers and put them in the map
                 headerKeyPair.put(temp.substring(0, temp.indexOf(":")).trim(), temp.substring(temp.indexOf(":") + 1, temp.length()));
+                System.out.println(temp);
                 temp = inStream.readLine();
             }
-            System.out.println("Content-Length: " + headerKeyPair.get("Content-Length"));
         }catch(IOException e){
             e.printStackTrace();
         }
@@ -108,7 +108,6 @@ public Map<String, String> headerKeyPair = new HashMap<String,String>();
     public void dataDump(DataOutputStream out) throws IOException {
         double currentBytes = 0.0;
         int i = 0;
-        System.out.println("Dumping data");
         try {
             //make a byte buffer of the proper size, fill it with a random byte array.
             ByteBuffer buf = ByteBuffer.allocate(BYTES_IN_MEGABYTES);
@@ -121,11 +120,12 @@ public Map<String, String> headerKeyPair = new HashMap<String,String>();
             out.writeBytes("Content Length: " + BYTES_IN_MEGABYTES * 100 + "bytes\r\n");
             out.writeBytes("File Contents: \r\n");
             //Keep writing the same buffer over and over until we've written 100 MB
-            System.out.println("Writing 100 MB");
             double size = 0;
             if (headerKeyPair.get("Size") != null){
                 size = Double.parseDouble(headerKeyPair.get("Size"));
             }
+            System.out.println("Writing " + (size/BYTES_IN_MEGABYTES) + " MB");
+
             while (currentBytes <= (size)){
                 out.write(buf.array(), 0, BYTES_IN_MEGABYTES);
                 buf.clear();
@@ -134,7 +134,7 @@ public Map<String, String> headerKeyPair = new HashMap<String,String>();
                 i++;
                 currentBytes = (i * BYTES_IN_MEGABYTES);
             }
-            System.out.println("Finished writing 100 MB to HTTP");
+            System.out.println("Finished writing" + (size/BYTES_IN_MEGABYTES) + " MB to HTTP");
             out.writeBytes("Content-Type: random/bytes\r\n\r\n");
         } catch (Exception e) {
             e.printStackTrace();
@@ -165,17 +165,14 @@ public Map<String, String> headerKeyPair = new HashMap<String,String>();
         byte[] b = new byte[BYTES_IN_MEGABYTES];
         ByteBuffer buf = ByteBuffer.allocate(BYTES_IN_MEGABYTES);
         try {
-            System.out.println("Entering dataAbsorbing loop");
             //while the input stream has something available, keep filling, emptying and re-filling. 
             while ( bytesRead < contentLength){
                 int read = myStream.read(b);
                 if (read == -1)
                 {
-                    System.out.println("Read -1, end of stream");
                     break;
                 }
                 bytesRead += read;
-                System.out.println("Read " + read + " this time (" + bytesRead + " total so far)");
                 buf.put(b);
                 Arrays.fill(b, (byte)0);
                 buf.clear();
@@ -208,9 +205,7 @@ public Map<String, String> headerKeyPair = new HashMap<String,String>();
     {
         try
         {
-            System.out.println("Responding to ping...");
             out.writeBytes("HTTP/1.0 200 OK\r\n");
-            System.out.println("Done");
         }
         catch (IOException e)
         {
