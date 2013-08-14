@@ -59,11 +59,9 @@ private DatagramSocket udpClient = null;
 
 	//Initialize the various threads that are needed.
 	private void tcpUpload(){
-		System.out.println("Reached TCP Upload");
 		new HandleTCP(client, 8080);
 	}
 	private void tcpDownload(){	
-		System.out.println("Reached TCP Download");
 		new HandleTCP(client, 8000);
 	}
 	private void udpUpload(){
@@ -71,7 +69,6 @@ private DatagramSocket udpClient = null;
 	}
 	private void udpDownload(){
 		HandleUDP myudpHandler = new HandleUDP(udpClient, 9999);
-
 	}
 	private void httpHandler(){
 		new HandleHttp(client);
