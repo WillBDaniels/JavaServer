@@ -1,0 +1,175 @@
+\hypertarget{classcom_1_1server_1_1HandleHTTP}{\section{com.\-server.\-Handle\-H\-T\-T\-P Class Reference}
+\label{classcom_1_1server_1_1HandleHTTP}\index{com.\-server.\-Handle\-H\-T\-T\-P@{com.\-server.\-Handle\-H\-T\-T\-P}}
+}
+
+
+class Handle\-Http This class is for handling the specific Http protocol, both P\-O\-S\-T and G\-E\-T.  
+
+
+Inheritance diagram for com.\-server.\-Handle\-H\-T\-T\-P\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classcom_1_1server_1_1HandleHTTP}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classcom_1_1server_1_1HandleHTTP_ab3c8c02165c7be1eb515ec8311409499}{Handle\-H\-T\-T\-P} (Socket client)
+\begin{DoxyCompactList}\small\item\em The only constructor, requires you have a client. \end{DoxyCompactList}\item 
+\hypertarget{classcom_1_1server_1_1HandleHTTP_a016efaa23359d95eabc8fae5996c4a93}{void \hyperlink{classcom_1_1server_1_1HandleHTTP_a016efaa23359d95eabc8fae5996c4a93}{run} ()}\label{classcom_1_1server_1_1HandleHTTP_a016efaa23359d95eabc8fae5996c4a93}
+
+\begin{DoxyCompactList}\small\item\em The main method that breaks down all of the client input string (G\-E\-T request, etc.) \end{DoxyCompactList}\item 
+void \hyperlink{classcom_1_1server_1_1HandleHTTP_af21b586545963aa09597b1b23bc4d728}{data\-Dump} (Data\-Output\-Stream out)  throws I\-O\-Exception 
+\begin{DoxyCompactList}\small\item\em Dumps 100 M\-B of data onto the client as fast as possible. \end{DoxyCompactList}\item 
+void \hyperlink{classcom_1_1server_1_1HandleHTTP_aa8b146dea927cfd479a2866706f586e0}{black\-Hole} (Input\-Stream ins, Data\-Output\-Stream out)  throws I\-O\-Exception
+\begin{DoxyCompactList}\small\item\em This method acts as the 'black hole' when a client P\-O\-S\-T\-S to the server It's assumed that the client will send as much data as it can, as fast as possible. \end{DoxyCompactList}\item 
+void \hyperlink{classcom_1_1server_1_1HandleHTTP_a0f68531fee6c43a46cb461056bd01bb3}{ping\-Test} (Data\-Output\-Stream out)  throws I\-O\-Exception     
+\begin{DoxyCompactList}\small\item\em This method is specifically for testing the ping from a client. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classcom_1_1server_1_1HandleHTTP_a8e81d6717697e6da66f2380a5028d9bf}{Map$<$ String, String $>$ {\bfseries header\-Key\-Pair} = new Hash\-Map$<$String,String$>$()}\label{classcom_1_1server_1_1HandleHTTP_a8e81d6717697e6da66f2380a5028d9bf}
+
+\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+double \hyperlink{classcom_1_1server_1_1HandleHTTP_a86cd12e8125ead9a4633ae36c5a9a193}{parse\-Headers} (Buffered\-Reader in\-Stream)
+\begin{DoxyCompactList}\small\item\em This method parses up the headers sent by the client and places them into a map. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classcom_1_1server_1_1HandleHTTP_accb595c4974e3dcf8b16f132f2125720}{Socket {\bfseries client}}\label{classcom_1_1server_1_1HandleHTTP_accb595c4974e3dcf8b16f132f2125720}
+
+\item 
+\hypertarget{classcom_1_1server_1_1HandleHTTP_af25c0805b2b95fac99c565f3a757aa3b}{Buffered\-Reader {\bfseries is}}\label{classcom_1_1server_1_1HandleHTTP_af25c0805b2b95fac99c565f3a757aa3b}
+
+\item 
+\hypertarget{classcom_1_1server_1_1HandleHTTP_a73bc15187fcb54b20aea1bb79f3f8943}{Data\-Output\-Stream {\bfseries os}}\label{classcom_1_1server_1_1HandleHTTP_a73bc15187fcb54b20aea1bb79f3f8943}
+
+\item 
+\hypertarget{classcom_1_1server_1_1HandleHTTP_a348787d7c716d9f4a6e37d7665d5a32a}{Input\-Stream {\bfseries ins}}\label{classcom_1_1server_1_1HandleHTTP_a348787d7c716d9f4a6e37d7665d5a32a}
+
+\item 
+\hypertarget{classcom_1_1server_1_1HandleHTTP_ac9235e083433b71b5dbd59e7a13b6043}{double {\bfseries content\-Length} = 0.\-0}\label{classcom_1_1server_1_1HandleHTTP_ac9235e083433b71b5dbd59e7a13b6043}
+
+\end{DoxyCompactItemize}
+\subsection*{Static Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classcom_1_1server_1_1HandleHTTP_a66ebdc36fba86b5468f22b4bd06764a8}{static final int {\bfseries B\-Y\-T\-E\-S\-\_\-\-I\-N\-\_\-\-M\-E\-G\-A\-B\-Y\-T\-E\-S} = 1048576}\label{classcom_1_1server_1_1HandleHTTP_a66ebdc36fba86b5468f22b4bd06764a8}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+class Handle\-Http This class is for handling the specific Http protocol, both P\-O\-S\-T and G\-E\-T. 
+
+It is initialized with only a client socket, as we need to process the input stream from it Currently it O\-N\-L\-Y checks for the first header to contain the word either G\-E\-T or P\-O\-S\-T. if neither are encountered, it just closes the connecction.
+
+\begin{DoxyAuthor}{Author}
+William Daniels 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+1.\-1 
+\end{DoxyVersion}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classcom_1_1server_1_1HandleHTTP_ab3c8c02165c7be1eb515ec8311409499}{\index{com\-::server\-::\-Handle\-H\-T\-T\-P@{com\-::server\-::\-Handle\-H\-T\-T\-P}!Handle\-H\-T\-T\-P@{Handle\-H\-T\-T\-P}}
+\index{Handle\-H\-T\-T\-P@{Handle\-H\-T\-T\-P}!com::server::HandleHTTP@{com\-::server\-::\-Handle\-H\-T\-T\-P}}
+\subsubsection[{Handle\-H\-T\-T\-P}]{\setlength{\rightskip}{0pt plus 5cm}com.\-server.\-Handle\-H\-T\-T\-P.\-Handle\-H\-T\-T\-P (
+\begin{DoxyParamCaption}
+\item[{Socket}]{client}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classcom_1_1server_1_1HandleHTTP_ab3c8c02165c7be1eb515ec8311409499}
+
+
+The only constructor, requires you have a client. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em Socket} & \char`\"{}client\char`\"{} the client that is connected to the http Port. \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classcom_1_1server_1_1HandleHTTP_aa8b146dea927cfd479a2866706f586e0}{\index{com\-::server\-::\-Handle\-H\-T\-T\-P@{com\-::server\-::\-Handle\-H\-T\-T\-P}!black\-Hole@{black\-Hole}}
+\index{black\-Hole@{black\-Hole}!com::server::HandleHTTP@{com\-::server\-::\-Handle\-H\-T\-T\-P}}
+\subsubsection[{black\-Hole}]{\setlength{\rightskip}{0pt plus 5cm}void com.\-server.\-Handle\-H\-T\-T\-P.\-black\-Hole (
+\begin{DoxyParamCaption}
+\item[{Input\-Stream}]{ins, }
+\item[{Data\-Output\-Stream}]{out}
+\end{DoxyParamCaption}
+) throws I\-O\-Exception\hspace{0.3cm}{\ttfamily [inline]}}}\label{classcom_1_1server_1_1HandleHTTP_aa8b146dea927cfd479a2866706f586e0}
+
+
+This method acts as the 'black hole' when a client P\-O\-S\-T\-S to the server It's assumed that the client will send as much data as it can, as fast as possible. 
+
+it simple overwrites the old data and does nothing with it. E\-X\-: 'black hole'.
+
+
+\begin{DoxyParams}{Parameters}
+{\em ins} & the basic client input\-Stream, to allow single byte reading. \\
+\hline
+\end{DoxyParams}
+\hypertarget{classcom_1_1server_1_1HandleHTTP_af21b586545963aa09597b1b23bc4d728}{\index{com\-::server\-::\-Handle\-H\-T\-T\-P@{com\-::server\-::\-Handle\-H\-T\-T\-P}!data\-Dump@{data\-Dump}}
+\index{data\-Dump@{data\-Dump}!com::server::HandleHTTP@{com\-::server\-::\-Handle\-H\-T\-T\-P}}
+\subsubsection[{data\-Dump}]{\setlength{\rightskip}{0pt plus 5cm}void com.\-server.\-Handle\-H\-T\-T\-P.\-data\-Dump (
+\begin{DoxyParamCaption}
+\item[{Data\-Output\-Stream}]{out}
+\end{DoxyParamCaption}
+) throws I\-O\-Exception\hspace{0.3cm}{\ttfamily [inline]}}}\label{classcom_1_1server_1_1HandleHTTP_af21b586545963aa09597b1b23bc4d728}
+
+
+Dumps 100 M\-B of data onto the client as fast as possible. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em out} & a Data\-Output\-Stream that represents the outgoing connection to the client. \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em I\-O\-Exception} & to catch any read/write errors. \\
+\hline
+\end{DoxyExceptions}
+\hypertarget{classcom_1_1server_1_1HandleHTTP_a86cd12e8125ead9a4633ae36c5a9a193}{\index{com\-::server\-::\-Handle\-H\-T\-T\-P@{com\-::server\-::\-Handle\-H\-T\-T\-P}!parse\-Headers@{parse\-Headers}}
+\index{parse\-Headers@{parse\-Headers}!com::server::HandleHTTP@{com\-::server\-::\-Handle\-H\-T\-T\-P}}
+\subsubsection[{parse\-Headers}]{\setlength{\rightskip}{0pt plus 5cm}double com.\-server.\-Handle\-H\-T\-T\-P.\-parse\-Headers (
+\begin{DoxyParamCaption}
+\item[{Buffered\-Reader}]{in\-Stream}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [private]}}}\label{classcom_1_1server_1_1HandleHTTP_a86cd12e8125ead9a4633ae36c5a9a193}
+
+
+This method parses up the headers sent by the client and places them into a map. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em in\-Stream} & a Buffered\-Reader used to read the headers line at a time until you reach the blank line \\
+\hline
+\end{DoxyParams}
+\hypertarget{classcom_1_1server_1_1HandleHTTP_a0f68531fee6c43a46cb461056bd01bb3}{\index{com\-::server\-::\-Handle\-H\-T\-T\-P@{com\-::server\-::\-Handle\-H\-T\-T\-P}!ping\-Test@{ping\-Test}}
+\index{ping\-Test@{ping\-Test}!com::server::HandleHTTP@{com\-::server\-::\-Handle\-H\-T\-T\-P}}
+\subsubsection[{ping\-Test}]{\setlength{\rightskip}{0pt plus 5cm}void com.\-server.\-Handle\-H\-T\-T\-P.\-ping\-Test (
+\begin{DoxyParamCaption}
+\item[{Data\-Output\-Stream}]{out}
+\end{DoxyParamCaption}
+) throws I\-O\-Exception\hspace{0.3cm}{\ttfamily [inline]}}}\label{classcom_1_1server_1_1HandleHTTP_a0f68531fee6c43a46cb461056bd01bb3}
+
+
+This method is specifically for testing the ping from a client. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em out} & a Data\-Output\-Stream that allows the server to write bytes to the client. \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+src/main/java/com/server/Handle\-H\-T\-T\-P.\-java\end{DoxyCompactItemize}

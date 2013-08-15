@@ -1,0 +1,66 @@
+\hypertarget{classcom_1_1server_1_1ServerThread}{\section{com.\-server.\-Server\-Thread Class Reference}
+\label{classcom_1_1server_1_1ServerThread}\index{com.\-server.\-Server\-Thread@{com.\-server.\-Server\-Thread}}
+}
+
+
+This class is the class that checks the clients local port, and hands off threads accordingly.  
+
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classcom_1_1server_1_1ServerThread_a7394c023583e8949b69cf664fe61539a}{{\bfseries Server\-Thread} (Socket client)}\label{classcom_1_1server_1_1ServerThread_a7394c023583e8949b69cf664fe61539a}
+
+\item 
+\hypertarget{classcom_1_1server_1_1ServerThread_acb48783d33cdc7b6ba983964b75de4a7}{{\bfseries Server\-Thread} (Datagram\-Socket udp\-Client)}\label{classcom_1_1server_1_1ServerThread_acb48783d33cdc7b6ba983964b75de4a7}
+
+\item 
+\hypertarget{classcom_1_1server_1_1ServerThread_a27a2a717d36ba29a5e6159ddf2bb8157}{void {\bfseries run} ()}\label{classcom_1_1server_1_1ServerThread_a27a2a717d36ba29a5e6159ddf2bb8157}
+
+\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classcom_1_1server_1_1ServerThread_a9f2b832582c529244e68717a480e47bf}{void {\bfseries tcp\-Upload} ()}\label{classcom_1_1server_1_1ServerThread_a9f2b832582c529244e68717a480e47bf}
+
+\item 
+\hypertarget{classcom_1_1server_1_1ServerThread_ac0e13af4a5f77da90d873e666016317c}{void {\bfseries tcp\-Download} ()}\label{classcom_1_1server_1_1ServerThread_ac0e13af4a5f77da90d873e666016317c}
+
+\item 
+\hypertarget{classcom_1_1server_1_1ServerThread_ab3bfacb3d82a51db195ecfef733f2ea1}{void {\bfseries udp\-Upload} ()}\label{classcom_1_1server_1_1ServerThread_ab3bfacb3d82a51db195ecfef733f2ea1}
+
+\item 
+\hypertarget{classcom_1_1server_1_1ServerThread_a69d6ff48a1d14da7d40968d5b3a1d2cb}{void {\bfseries udp\-Download} ()}\label{classcom_1_1server_1_1ServerThread_a69d6ff48a1d14da7d40968d5b3a1d2cb}
+
+\item 
+\hypertarget{classcom_1_1server_1_1ServerThread_ac9197dc3ac9e06be7fcbdbc72eed7439}{void {\bfseries http\-Handler} ()}\label{classcom_1_1server_1_1ServerThread_ac9197dc3ac9e06be7fcbdbc72eed7439}
+
+\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classcom_1_1server_1_1ServerThread_acdc12e0a8fd08b1c6fc78a8776141cb2}{boolean {\bfseries continue\-U\-D\-P} = true}\label{classcom_1_1server_1_1ServerThread_acdc12e0a8fd08b1c6fc78a8776141cb2}
+
+\item 
+\hypertarget{classcom_1_1server_1_1ServerThread_a35497d54ac05820a80b8b6095a5276e8}{Socket {\bfseries client}}\label{classcom_1_1server_1_1ServerThread_a35497d54ac05820a80b8b6095a5276e8}
+
+\item 
+\hypertarget{classcom_1_1server_1_1ServerThread_a235f27cd5c41e5bf3a6e341ba54eefc3}{Datagram\-Socket {\bfseries udp\-Client} = null}\label{classcom_1_1server_1_1ServerThread_a235f27cd5c41e5bf3a6e341ba54eefc3}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This class is the class that checks the clients local port, and hands off threads accordingly. 
+
+\begin{DoxyAuthor}{Author}
+William Daniels 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+1.\-1 
+\end{DoxyVersion}
+
+
+The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+src/main/java/com/server/Server\-Thread.\-java\end{DoxyCompactItemize}

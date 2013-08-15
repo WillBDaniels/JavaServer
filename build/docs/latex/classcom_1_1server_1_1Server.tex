@@ -1,0 +1,66 @@
+\hypertarget{classcom_1_1server_1_1Server}{\section{com.\-server.\-Server Class Reference}
+\label{classcom_1_1server_1_1Server}\index{com.\-server.\-Server@{com.\-server.\-Server}}
+}
+
+
+This class acts as the basic port handler, and contains the primary server loop.  
+
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classcom_1_1server_1_1Server_a673471b8c62caeb3e6058293f309da4f}{start\-Server} ()
+\begin{DoxyCompactList}\small\item\em This method acts as the main thread starter for the program. \end{DoxyCompactList}\item 
+\hypertarget{classcom_1_1server_1_1Server_a534f1955b0d607422970e36f674435ce}{void \hyperlink{classcom_1_1server_1_1Server_a534f1955b0d607422970e36f674435ce}{spinup\-Server\-Socket} (Server\-Socket listen, int udp\-Port)}\label{classcom_1_1server_1_1Server_a534f1955b0d607422970e36f674435ce}
+
+\begin{DoxyCompactList}\small\item\em method spinup\-Server\-Socket This method starts all of the connetions, and listens in a loop to all of them. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classcom_1_1server_1_1Server_a195a2fd46a6d4ed383f37b372acf4a6e}{static final int \hyperlink{classcom_1_1server_1_1Server_a195a2fd46a6d4ed383f37b372acf4a6e}{H\-T\-T\-P\-\_\-\-P\-O\-R\-T} = 3962}\label{classcom_1_1server_1_1Server_a195a2fd46a6d4ed383f37b372acf4a6e}
+
+\begin{DoxyCompactList}\small\item\em http upload and download port \end{DoxyCompactList}\item 
+\hypertarget{classcom_1_1server_1_1Server_a667e9966e73c481be93420c2678b5e44}{static final int \hyperlink{classcom_1_1server_1_1Server_a667e9966e73c481be93420c2678b5e44}{U\-D\-P\-\_\-\-U\-P\-L\-O\-A\-D\-\_\-\-P\-O\-R\-T} = 6001}\label{classcom_1_1server_1_1Server_a667e9966e73c481be93420c2678b5e44}
+
+\begin{DoxyCompactList}\small\item\em U\-D\-P Upload port. \end{DoxyCompactList}\item 
+\hypertarget{classcom_1_1server_1_1Server_a75ebb782b7f93a00767c42ecc06e948f}{static final int \hyperlink{classcom_1_1server_1_1Server_a75ebb782b7f93a00767c42ecc06e948f}{U\-D\-P\-\_\-\-D\-O\-W\-N\-L\-O\-A\-D\-\_\-\-P\-O\-R\-T} = 9999}\label{classcom_1_1server_1_1Server_a75ebb782b7f93a00767c42ecc06e948f}
+
+\begin{DoxyCompactList}\small\item\em U\-D\-P Download port. \end{DoxyCompactList}\item 
+\hypertarget{classcom_1_1server_1_1Server_a2dc0717a250239ef76137e0d76d717a5}{static final int \hyperlink{classcom_1_1server_1_1Server_a2dc0717a250239ef76137e0d76d717a5}{T\-C\-P\-\_\-\-U\-P\-L\-O\-A\-D\-\_\-\-P\-O\-R\-T} = 8080}\label{classcom_1_1server_1_1Server_a2dc0717a250239ef76137e0d76d717a5}
+
+\begin{DoxyCompactList}\small\item\em T\-C\-P Upload port. \end{DoxyCompactList}\item 
+\hypertarget{classcom_1_1server_1_1Server_a0a6de32d93cfa5d736a594c1b163a555}{static final int \hyperlink{classcom_1_1server_1_1Server_a0a6de32d93cfa5d736a594c1b163a555}{T\-C\-P\-\_\-\-D\-O\-W\-N\-L\-O\-A\-D\-\_\-\-P\-O\-R\-T} = 8000}\label{classcom_1_1server_1_1Server_a0a6de32d93cfa5d736a594c1b163a555}
+
+\begin{DoxyCompactList}\small\item\em T\-C\-P Downlaod port. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This class acts as the basic port handler, and contains the primary server loop. 
+
+All Port handling, and handing off to threads, essentially happens here.
+
+\begin{DoxyAuthor}{Author}
+William Daniels 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+1.\-1 
+\end{DoxyVersion}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classcom_1_1server_1_1Server_a673471b8c62caeb3e6058293f309da4f}{\index{com\-::server\-::\-Server@{com\-::server\-::\-Server}!start\-Server@{start\-Server}}
+\index{start\-Server@{start\-Server}!com::server::Server@{com\-::server\-::\-Server}}
+\subsubsection[{start\-Server}]{\setlength{\rightskip}{0pt plus 5cm}void com.\-server.\-Server.\-start\-Server (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classcom_1_1server_1_1Server_a673471b8c62caeb3e6058293f309da4f}
+
+
+This method acts as the main thread starter for the program. 
+
+kicks off all the threads. 
+
+The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+src/main/java/com/server/Server.\-java\end{DoxyCompactItemize}

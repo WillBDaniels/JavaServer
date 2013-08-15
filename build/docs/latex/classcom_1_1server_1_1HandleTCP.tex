@@ -1,0 +1,122 @@
+\hypertarget{classcom_1_1server_1_1HandleTCP}{\section{com.\-server.\-Handle\-T\-C\-P Class Reference}
+\label{classcom_1_1server_1_1HandleTCP}\index{com.\-server.\-Handle\-T\-C\-P@{com.\-server.\-Handle\-T\-C\-P}}
+}
+
+
+This class to manage upload and download requests via T\-C\-P.  
+
+
+Inheritance diagram for com.\-server.\-Handle\-T\-C\-P\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classcom_1_1server_1_1HandleTCP}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classcom_1_1server_1_1HandleTCP_ad94afba7e2974794a5f44015e1c46a4d}{Handle\-T\-C\-P} (Socket client, int which\-Port)
+\begin{DoxyCompactList}\small\item\em Constructor for T\-C\-P Handler. \end{DoxyCompactList}\item 
+\hypertarget{classcom_1_1server_1_1HandleTCP_a695e48bf0df4e770e89fc8cb1b7a8511}{void \hyperlink{classcom_1_1server_1_1HandleTCP_a695e48bf0df4e770e89fc8cb1b7a8511}{run} ()}\label{classcom_1_1server_1_1HandleTCP_a695e48bf0df4e770e89fc8cb1b7a8511}
+
+\begin{DoxyCompactList}\small\item\em Main method to manage T\-C\-P connections, checks port number and redirects to the appropriate managing method. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classcom_1_1server_1_1HandleTCP_aa9343d9503bbc43f40bab5a0eb309c2b}{data\-Dump} (Data\-Output\-Stream out)  throws I\-O\-Exception 
+\begin{DoxyCompactList}\small\item\em Method to dump data onto the calling client Dumps 100\-M\-B of random data. \end{DoxyCompactList}\item 
+void \hyperlink{classcom_1_1server_1_1HandleTCP_ab5dfcf570b2f843569c96c2ee461839c}{black\-Hole} (Input\-Stream ins)
+\begin{DoxyCompactList}\small\item\em Method provides a dumping ground for data to test upload speeds. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classcom_1_1server_1_1HandleTCP_a5ecfa869e35d742ad0a43421578ce3f8}{Socket {\bfseries client}}\label{classcom_1_1server_1_1HandleTCP_a5ecfa869e35d742ad0a43421578ce3f8}
+
+\item 
+\hypertarget{classcom_1_1server_1_1HandleTCP_aad0c50ffed85d5f4fa3a4c91f893b23a}{final int {\bfseries which\-Port}}\label{classcom_1_1server_1_1HandleTCP_aad0c50ffed85d5f4fa3a4c91f893b23a}
+
+\end{DoxyCompactItemize}
+\subsection*{Static Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classcom_1_1server_1_1HandleTCP_ad068267a7062ccee4b5c33cca5c6a42b}{static final int {\bfseries B\-Y\-T\-E\-S\-\_\-\-I\-N\-\_\-\-M\-E\-G\-A\-B\-Y\-T\-E\-S} = 1048576}\label{classcom_1_1server_1_1HandleTCP_ad068267a7062ccee4b5c33cca5c6a42b}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This class to manage upload and download requests via T\-C\-P. 
+
+\begin{DoxyAuthor}{Author}
+Christopher Jordan , William Daniels 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+1.\-1 
+\end{DoxyVersion}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classcom_1_1server_1_1HandleTCP_ad94afba7e2974794a5f44015e1c46a4d}{\index{com\-::server\-::\-Handle\-T\-C\-P@{com\-::server\-::\-Handle\-T\-C\-P}!Handle\-T\-C\-P@{Handle\-T\-C\-P}}
+\index{Handle\-T\-C\-P@{Handle\-T\-C\-P}!com::server::HandleTCP@{com\-::server\-::\-Handle\-T\-C\-P}}
+\subsubsection[{Handle\-T\-C\-P}]{\setlength{\rightskip}{0pt plus 5cm}com.\-server.\-Handle\-T\-C\-P.\-Handle\-T\-C\-P (
+\begin{DoxyParamCaption}
+\item[{Socket}]{client, }
+\item[{int}]{which\-Port}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classcom_1_1server_1_1HandleTCP_ad94afba7e2974794a5f44015e1c46a4d}
+
+
+Constructor for T\-C\-P Handler. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em Socket} & \char`\"{}client\char`\"{} for connection \\
+\hline
+{\em Int} & \char`\"{}which\-Port\char`\"{} for connection \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classcom_1_1server_1_1HandleTCP_ab5dfcf570b2f843569c96c2ee461839c}{\index{com\-::server\-::\-Handle\-T\-C\-P@{com\-::server\-::\-Handle\-T\-C\-P}!black\-Hole@{black\-Hole}}
+\index{black\-Hole@{black\-Hole}!com::server::HandleTCP@{com\-::server\-::\-Handle\-T\-C\-P}}
+\subsubsection[{black\-Hole}]{\setlength{\rightskip}{0pt plus 5cm}void com.\-server.\-Handle\-T\-C\-P.\-black\-Hole (
+\begin{DoxyParamCaption}
+\item[{Input\-Stream}]{ins}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [private]}}}\label{classcom_1_1server_1_1HandleTCP_ab5dfcf570b2f843569c96c2ee461839c}
+
+
+Method provides a dumping ground for data to test upload speeds. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em Input\-Stream} & \char`\"{}ins\char`\"{} provides input stream for data being uploaded \\
+\hline
+\end{DoxyParams}
+\hypertarget{classcom_1_1server_1_1HandleTCP_aa9343d9503bbc43f40bab5a0eb309c2b}{\index{com\-::server\-::\-Handle\-T\-C\-P@{com\-::server\-::\-Handle\-T\-C\-P}!data\-Dump@{data\-Dump}}
+\index{data\-Dump@{data\-Dump}!com::server::HandleTCP@{com\-::server\-::\-Handle\-T\-C\-P}}
+\subsubsection[{data\-Dump}]{\setlength{\rightskip}{0pt plus 5cm}void com.\-server.\-Handle\-T\-C\-P.\-data\-Dump (
+\begin{DoxyParamCaption}
+\item[{Data\-Output\-Stream}]{out}
+\end{DoxyParamCaption}
+) throws I\-O\-Exception\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [private]}}}\label{classcom_1_1server_1_1HandleTCP_aa9343d9503bbc43f40bab5a0eb309c2b}
+
+
+Method to dump data onto the calling client Dumps 100\-M\-B of random data. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em Data\-Output\-Stream} & \char`\"{}out\char`\"{} that provides an outgoing connection to the client. \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em I\-O\-Exception} & to catch any read/write errors. \\
+\hline
+\end{DoxyExceptions}
+
+
+The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+src/main/java/com/server/Handle\-T\-C\-P.\-java\end{DoxyCompactItemize}

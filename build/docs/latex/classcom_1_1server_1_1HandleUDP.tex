@@ -1,0 +1,99 @@
+\hypertarget{classcom_1_1server_1_1HandleUDP}{\section{com.\-server.\-Handle\-U\-D\-P Class Reference}
+\label{classcom_1_1server_1_1HandleUDP}\index{com.\-server.\-Handle\-U\-D\-P@{com.\-server.\-Handle\-U\-D\-P}}
+}
+
+
+This class handles most the primary U\-D\-P Upload and Download functionality for the server.  
+
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classcom_1_1server_1_1HandleUDP_a0b8ef4313d758274df6927dc2e9e2dba}{Handle\-U\-D\-P} (Datagram\-Socket client, int which\-Port)
+\begin{DoxyCompactList}\small\item\em constructor for the class, takes two parameters, as well as starts the thread. \end{DoxyCompactList}\item 
+\hypertarget{classcom_1_1server_1_1HandleUDP_a321b13bfe67f933e522f7f3d184d9834}{void \hyperlink{classcom_1_1server_1_1HandleUDP_a321b13bfe67f933e522f7f3d184d9834}{run} ()}\label{classcom_1_1server_1_1HandleUDP_a321b13bfe67f933e522f7f3d184d9834}
+
+\begin{DoxyCompactList}\small\item\em simply chooses a port and runs it. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classcom_1_1server_1_1HandleUDP_aa4bfb125e4d66d55fefb7fbe88544d32}{upload\-Black\-Hole} ()
+\begin{DoxyCompactList}\small\item\em This method handles all of the upload logic for the U\-D\-P protocol. \end{DoxyCompactList}\item 
+\hypertarget{classcom_1_1server_1_1HandleUDP_ab6e9ceefc50e98e285c00dc8999f70e7}{void {\bfseries download\-Data\-Dump} ()}\label{classcom_1_1server_1_1HandleUDP_ab6e9ceefc50e98e285c00dc8999f70e7}
+
+\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classcom_1_1server_1_1HandleUDP_a4dcb0a95b3431a88f398282ec3a499dc}{final Map$<$ String, Time\-Stamp\-Value $>$ {\bfseries address\-Table}}\label{classcom_1_1server_1_1HandleUDP_a4dcb0a95b3431a88f398282ec3a499dc}
+
+\item 
+\hypertarget{classcom_1_1server_1_1HandleUDP_ab24c8005f47ea8f5ac71320473946a6f}{final Datagram\-Socket {\bfseries client}}\label{classcom_1_1server_1_1HandleUDP_ab24c8005f47ea8f5ac71320473946a6f}
+
+\item 
+\hypertarget{classcom_1_1server_1_1HandleUDP_a34ce0e6d194601f10ea85144d57bd452}{final int {\bfseries which\-Port}}\label{classcom_1_1server_1_1HandleUDP_a34ce0e6d194601f10ea85144d57bd452}
+
+\end{DoxyCompactItemize}
+\subsection*{Static Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classcom_1_1server_1_1HandleUDP_af20e767dcb9aebe5f9a691d4c419d885}{static final int {\bfseries O\-N\-E\-\_\-\-M\-I\-N\-U\-T\-E\-\_\-\-I\-N\-\_\-\-M\-I\-L\-L\-I\-S\-E\-C\-O\-N\-D\-S} = 60000}\label{classcom_1_1server_1_1HandleUDP_af20e767dcb9aebe5f9a691d4c419d885}
+
+\item 
+\hypertarget{classcom_1_1server_1_1HandleUDP_a0be809a15b91cf0e1218c9a9fe4083dd}{static final int {\bfseries M\-A\-X\-I\-M\-U\-M\-\_\-\-P\-A\-C\-K\-E\-T\-\_\-\-S\-I\-Z\-E} = 30 $\ast$ 1024}\label{classcom_1_1server_1_1HandleUDP_a0be809a15b91cf0e1218c9a9fe4083dd}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This class handles most the primary U\-D\-P Upload and Download functionality for the server. 
+
+All of the various handling of packets, whether it be dumping or recieving is handled inside. A side note\-: A\-L\-L of the methods used for building the 'willdp' aka\-: the baby protocol on top of U\-D\-P the server uses to specifically consider '0' (that is, the char value of 0), to be the finishing bit for the connection. once that is reached, the respective sender is expected to send, in this order\-: a packet containing the ip\-Address to bind to, as well as a port number.
+
+\begin{DoxyAuthor}{Author}
+William Daniels 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+1.\-1 
+\end{DoxyVersion}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classcom_1_1server_1_1HandleUDP_a0b8ef4313d758274df6927dc2e9e2dba}{\index{com\-::server\-::\-Handle\-U\-D\-P@{com\-::server\-::\-Handle\-U\-D\-P}!Handle\-U\-D\-P@{Handle\-U\-D\-P}}
+\index{Handle\-U\-D\-P@{Handle\-U\-D\-P}!com::server::HandleUDP@{com\-::server\-::\-Handle\-U\-D\-P}}
+\subsubsection[{Handle\-U\-D\-P}]{\setlength{\rightskip}{0pt plus 5cm}com.\-server.\-Handle\-U\-D\-P.\-Handle\-U\-D\-P (
+\begin{DoxyParamCaption}
+\item[{Datagram\-Socket}]{client, }
+\item[{int}]{which\-Port}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classcom_1_1server_1_1HandleUDP_a0b8ef4313d758274df6927dc2e9e2dba}
+
+
+constructor for the class, takes two parameters, as well as starts the thread. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em client} & The Datagram\-Socket that is connected to. \\
+\hline
+{\em which\-Port} & an int that tells which port has been passed in. \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classcom_1_1server_1_1HandleUDP_aa4bfb125e4d66d55fefb7fbe88544d32}{\index{com\-::server\-::\-Handle\-U\-D\-P@{com\-::server\-::\-Handle\-U\-D\-P}!upload\-Black\-Hole@{upload\-Black\-Hole}}
+\index{upload\-Black\-Hole@{upload\-Black\-Hole}!com::server::HandleUDP@{com\-::server\-::\-Handle\-U\-D\-P}}
+\subsubsection[{upload\-Black\-Hole}]{\setlength{\rightskip}{0pt plus 5cm}void com.\-server.\-Handle\-U\-D\-P.\-upload\-Black\-Hole (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [private]}}}\label{classcom_1_1server_1_1HandleUDP_aa4bfb125e4d66d55fefb7fbe88544d32}
+
+
+This method handles all of the upload logic for the U\-D\-P protocol. 
+
+When a connection is made to it, it 'black holes' all of the given information, and disposes it. It waits until the exit character (0) is sent to it, and then tries to connect to a remote host with the next two packets. 
+
+The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+src/main/java/com/server/Handle\-U\-D\-P.\-java\end{DoxyCompactItemize}
