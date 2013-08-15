@@ -59,7 +59,7 @@ This will compile the server, and create a useable jar file in the build/libs di
 
 At the moment, the 'name of jar' is JavaServer.jar. That is subject to change based upon your own configurations, preferences, etc etc.
 
-###Notes
+##Notes
 
  This program DOES require java to be installed on the base machine. That might seem obvious, but it does a lot of things automatically, so it's easy to get complacent. 
 
@@ -67,7 +67,7 @@ At the moment, the 'name of jar' is JavaServer.jar. That is subject to change ba
 
  The javadocs for this program are provided through a program called Doxygen, to use it, you need to download it from the source at http://www.stack.nl/~dimitri/doxygen/download.html There are instructions for all platforms there! You'll also have to set your environment variable so that typing the command "Doxygen" on the command line (or terminal) gives you the current Doxygen version. 
 
- ###Known bugs
+ ##Known bugs
  
  There is an issue with the way TCP is handled, a better checking of end of stream is desired. 
 
@@ -76,7 +76,7 @@ At the moment, the 'name of jar' is JavaServer.jar. That is subject to change ba
  For the Http Upload method, there is some inconsistency where it could block indefinitely, and therefore keep the thread alive forever. 
 
 
- ###Contact
+ ##Contact
 
  If you'd like to contribute to this project, or you just have a question about it's operation, feel free to contact me at willbdaniels@gmail.com. I check that relatively frequently, so it shouldn't be a big issue.
 

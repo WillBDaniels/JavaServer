@@ -6,6 +6,7 @@ import java.nio.*;
 import java.util.*;
 
 /**
+* class HandleHttp
 * This class is for handling the specific Http protocol, both POST and GET. 
 * It is initialized with only a client socket, as we need to process the input stream from it
 * Currently it ONLY checks for the first header to contain the word either GET or POST. if neither are encountered, 
