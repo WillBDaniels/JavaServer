@@ -52,18 +52,27 @@ public Map<String, String> headerKeyPair = new HashMap<String,String>();
         try {
 
             String firstLine = is.readLine();
-            contentLength = getContentLength(is);
-            if (firstLine.contains("GET /ping"))
+            contentLength = parseHeaders(is);
+            if (firstLine.contains("GET /ping")){
+                System.out.println("Handling HTTP Ping request...");
                 pingTest(os);
-            else if (firstLine.contains("GET"))
+            }
+            else if (firstLine.contains("GET")){
+                System.out.println("Handling HTTP GET request...");
                 dataDump(os);
-            else if (firstLine.contains("POST"))
+            }
+            else if (firstLine.contains("POST")){
+                System.out.println("Handling HTTP POST request...");
                 blackHole(ins, os);
-            else 
-                client.close();
-            // BufferedReader rd = new BufferedReader(is));
-            //System.out.println("here...?");
-        } catch (Exception e) {
+            }
+            else {
+                System.out.println("HTTP request Verb Unsupported...");
+                os.writeBytes("<html><head><title>Verb Unsupported</title></head><body>\r\n\r\n");
+                os.writeBytes("HTTP/1.0 400 BadRequst" + "\r\n");
+                os.writeBytes("Content-Type: text/html\r\n\r\n");
+                os.writeBytes("</body></html>");
+            }
+        } catch (IOException e) {
             e.printStackTrace();
         }
         //Don't forget to cleanup!
@@ -80,8 +89,12 @@ public Map<String, String> headerKeyPair = new HashMap<String,String>();
     }
 
 
-    private double getContentLength(BufferedReader inStream){
-
+    /**
+    * This method parses up the headers sent by the client and places them into a map. 
+    *
+    *@param inStream a BufferedReader used to read the headers line at a time until you reach the blank line
+    */
+    private double parseHeaders(BufferedReader inStream){
         try {
             String temp = inStream.readLine();
             while ((temp.length()) > 2){
@@ -124,8 +137,11 @@ public Map<String, String> headerKeyPair = new HashMap<String,String>();
             if (headerKeyPair.get("Size") != null){
                 size = Double.parseDouble(headerKeyPair.get("Size"));
             }
-            System.out.println("Writing " + (size/BYTES_IN_MEGABYTES) + " MB");
-
+            if (size != 0)
+                System.out.println("Writing " + (size/BYTES_IN_MEGABYTES) + " MB to client");
+            else
+                System.out.println("Writing the default: " + (BYTES_IN_MEGABYTES/BYTES_IN_MEGABYTES) + " MB to the client");
+            //This defaults to writing at least 1 MB to the client, even if the 'size' header comes back 0.
             while (currentBytes <= (size)){
                 out.write(buf.array(), 0, BYTES_IN_MEGABYTES);
                 buf.clear();
@@ -134,7 +150,7 @@ public Map<String, String> headerKeyPair = new HashMap<String,String>();
                 i++;
                 currentBytes = (i * BYTES_IN_MEGABYTES);
             }
-            System.out.println("Finished writing" + (size/BYTES_IN_MEGABYTES) + " MB to HTTP");
+            System.out.println("Finished writing data via HTTP to the client.");
             out.writeBytes("Content-Type: random/bytes\r\n\r\n");
         } catch (Exception e) {
             e.printStackTrace();
@@ -165,17 +181,28 @@ public Map<String, String> headerKeyPair = new HashMap<String,String>();
         byte[] b = new byte[BYTES_IN_MEGABYTES];
         ByteBuffer buf = ByteBuffer.allocate(BYTES_IN_MEGABYTES);
         try {
+
+            System.out.println("Attempting to read as much information from the client as possible.");
+            long startTime = System.currentTimeMillis();
             //while the input stream has something available, keep filling, emptying and re-filling. 
-            while ( bytesRead < contentLength){
-                int read = myStream.read(b);
-                if (read == -1)
-                {
+            while (bytesRead < contentLength){
+                if(myStream.available() > 0) {
+                    int read = myStream.read(b);
+                    if (read == -1)
+                    {
+                        System.out.println("Read -1, end of stream");
+                        break;
+                    }
+                    bytesRead += read;
+                    System.out.println("Read " + read + " this time (" + bytesRead + " total so far)");
+                    buf.put(b);
+                    Arrays.fill(b, (byte)0);
+                    buf.clear();
+                }
+                if (System.currentTimeMillis() - startTime > 60000) {
+                    System.out.println("timing out after reading " + bytesRead + " bytes");
                     break;
                 }
-                bytesRead += read;
-                buf.put(b);
-                Arrays.fill(b, (byte)0);
-                buf.clear();
             }
             out.writeBytes("HTTP/1.0 200 OK\r\n");
             //out.writeBytes("Bytes Read: " + bytesRead + "bytes\r\n");
@@ -201,6 +228,11 @@ public Map<String, String> headerKeyPair = new HashMap<String,String>();
         }
     }
 
+    /**
+    * This method is specifically for testing the ping from a client.
+    *
+    *@param out a DataOutputStream that allows the server to write bytes to the client.  
+    */
     public void pingTest(DataOutputStream out) throws IOException
     {
         try

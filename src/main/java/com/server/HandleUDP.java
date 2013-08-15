@@ -45,7 +45,7 @@ class HandleUDP{
 	*simply chooses a port and runs it. 
 	*/
 	public void run(){
-		if (whichPort == 6667)
+		if (whichPort == 6001)
 			uploadBlackHole();
 		else if (whichPort == 9999)
 			downloadDataDump();
@@ -83,10 +83,6 @@ class HandleUDP{
 					tsValue.value += packet.getLength();
 					tsValue.timeStamp = System.currentTimeMillis();
 				}
-				//tempBuf = packet.getData();
-				//tempBufTwo = ("Well Hello back!").getBytes();
-				//DatagramPacket reSend = new DatagramPacket(tempBufTwo, tempBufTwo.length, packet.getAddress(), packet.getPort());
-				//client.send(reSend);
 				if (((char)data[0]) == '0'){
 					byte[] tempBuf = new byte[MAXIMUM_PACKET_SIZE];
 					//Write back a packet containing how many total bytes were written. 
@@ -99,9 +95,9 @@ class HandleUDP{
 				//check the time of all current values in the addressTablem, delete all over 2 minutes old.
 				Iterator<TimeStampValue> it = addressTable.values().iterator();
 				while (it.hasNext()) {
-          if ((System.currentTimeMillis() - it.next().timeStamp) > ONE_MINUTE_IN_MILLISECONDS * 2) {
-            it.remove();  // must use it.remove to prevent ConcurrentModificationException
-          }
+	          		if ((System.currentTimeMillis() - it.next().timeStamp) > ONE_MINUTE_IN_MILLISECONDS * 2) {
+	            		it.remove();  // must use it.remove to prevent ConcurrentModificationException
+	          		}
 				}
 			}
 			
@@ -121,7 +117,7 @@ class HandleUDP{
 				byte[] data = packet.getData();
 				if (((char)data[0]) == '1'){
 					byte[] tempBuf = ("Get ready for 100 MB of fun!").getBytes();
-					System.out.println("I'm about to throw 100MB of the best data in the world at: " + packet.getAddress());
+					System.out.println("I'm about to try and send 100 MB of data via UDP To: " + packet.getAddress());
 					DatagramPacket sendPacket = new DatagramPacket(tempBuf, tempBuf.length, packet.getAddress(), packet.getPort());
 					client.send(sendPacket);
 					(new DumpData(packet.getAddress(), packet.getPort(), client)).start();
@@ -179,6 +175,7 @@ class DumpData extends Thread{
         		client.send(sendPacket);
         		totalBytes = totalBytes + MAXIMUM_PACKET_SIZE;
 	        }
+	        System.out.println("Just finished sending 100 MB to the client via' UDP");
 			byte[] buf = new byte[MAXIMUM_PACKET_SIZE];
 			//make a new packet object
 			DatagramPacket packet = new DatagramPacket(buf, buf.length);

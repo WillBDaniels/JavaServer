@@ -1,4 +1,5 @@
 apply plugin: 'java'
+apply plugin: 'eclipse'
 
 
 defaultTasks 'build'
@@ -9,17 +10,44 @@ task wrapper(type: Wrapper){
 
 configurations {
 	bundle
+    compile.extendsFrom bundle
+}
+
+dependencies {
+    testCompile 'junit:junit:4.10'
+
+}
+
+repositories {
+    mavenCentral()
 }
 compileJava{
 
 }
 
+
+test {
+    useJUnit()
+}
+
+task docs(type:Exec) {
+    ext {
+      outputDir = file('build/docs')
+    }
+    commandLine 'doxygen'
+    inputs.file file("Doxyfile")
+    inputs.files sourceSets.main.java, sourceSets.test.java
+    outputs.dir outputDir
+}
+
 jar {
+	//This is the variable to change if you would like a different name
 	baseName = "JavaServer"
 	from configurations.bundle.collect { it.isDirectory() ? it : zipTree(it)}
 	manifest {
 		attributes("Main-Class": "com.server.ServerHandler");
 	}
 }
+build.dependsOn docs
 
 task all (dependsOn: [build])

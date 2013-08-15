@@ -45,7 +45,7 @@ private DatagramSocket udpClient = null;
 			}
 			else{
 				switch(udpClient.getLocalPort()){
-					case 6667:
+					case 6001:
 						udpUpload();
 						break;
 					case 9999:
@@ -59,19 +59,16 @@ private DatagramSocket udpClient = null;
 
 	//Initialize the various threads that are needed.
 	private void tcpUpload(){
-		System.out.println("Reached TCP Upload");
 		new HandleTCP(client, 8080);
 	}
 	private void tcpDownload(){	
-		System.out.println("Reached TCP Download");
 		new HandleTCP(client, 8000);
 	}
 	private void udpUpload(){
-		new HandleUDP(udpClient, 6667);
+		new HandleUDP(udpClient, 6001);
 	}
 	private void udpDownload(){
 		HandleUDP myudpHandler = new HandleUDP(udpClient, 9999);
-
 	}
 	private void httpHandler(){
 		new HandleHttp(client);

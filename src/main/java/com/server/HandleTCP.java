@@ -8,7 +8,7 @@ import java.util.*;
 /**
  * This class to manage upload and download requests via TCP
  *
- * @author Christopher Jordan
+ * @author Christopher Jordan , William Daniels
  * @version 1.1
  */
 class HandleTCP extends Thread{
@@ -71,6 +71,7 @@ class HandleTCP extends Thread{
 	private void dataDump(DataOutputStream out) throws IOException {
 		double currentBytes = 0.0;
         int i = 0;
+        System.out.println("Trying to write 100 MB to the client via TCP");
         try {
             //make a byte buffer of the proper size, fill it with a random byte array.
             ByteBuffer buf = ByteBuffer.allocate(BYTES_IN_MEGABYTES);
@@ -88,7 +89,7 @@ class HandleTCP extends Thread{
                 i++;
                 currentBytes = (i * BYTES_IN_MEGABYTES);
             }
-            System.out.println("Finished writing 100 MB");
+            System.out.println("Finished writing 100 MB via TCP");
             out.writeBytes("Content-Type: random/bytes\r\n\r\n");
         } catch (Exception e) {
             //write a standard error message out if something goes wrong, IE: IOException
@@ -108,6 +109,7 @@ class HandleTCP extends Thread{
 	private void blackHole(InputStream ins){
 		int i = 0;
         DataInputStream myStream = new DataInputStream(ins);
+        System.out.println("Waiting for the client to upload as much data as it'd like via' TCP.");
         //make the byteBuffer and back it with a large enough byte array.
         byte[] b = new byte[BYTES_IN_MEGABYTES];
         ByteBuffer buf = ByteBuffer.allocate(BYTES_IN_MEGABYTES);
@@ -119,7 +121,7 @@ class HandleTCP extends Thread{
                 Arrays.fill(b, (byte)0);
                 buf.clear();
             }
-            System.out.println("Finished reading TCP");
+            System.out.println("Finished data from the client via TCP");
         }
         catch(IOException e){
             e.printStackTrace();
