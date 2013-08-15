@@ -8,6 +8,8 @@ This Java server is used primarily to accomplish a few functions.
 
 This server allows for TCP, UDP and HTTP, is multi-Threaded, and should be able to run ad-infinum until closed by the hosting system. It does allow for simple NAT traversal, but only if the NAT is configured to hold open an outgoing port for a small amount of time
 
+You can find a link to the javadocs at: http://willbdaniels.github.io/JavaServer/
+
 ###Configuration
 
 The only really necessary configuration would be to make sure you have Java installed and that you're available to listen to the selected ports on the server. 
