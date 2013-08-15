@@ -16,7 +16,7 @@ import java.util.*;
 *@author William Daniels
 *@version 1.1
 */
-class HandleUDP{
+public class HandleUDP{
 
 	private final static int ONE_MINUTE_IN_MILLISECONDS = 60000;
 

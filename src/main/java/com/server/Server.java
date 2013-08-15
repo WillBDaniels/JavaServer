@@ -21,12 +21,20 @@ import java.lang.StringBuilder;
 */
 public class Server {
     //initialize all of the ports this server will listen on.
+    /** http upload and download port*/
     private static final int HTTP_PORT = 3962;
+    /** UDP Upload port */
     private static final int UDP_UPLOAD_PORT = 6001;
+    /** UDP Download port */
     private static final int UDP_DOWNLOAD_PORT = 9999;
+    /** TCP Upload port */
     private static final int TCP_UPLOAD_PORT = 8080;
+    /** TCP Downlaod port */
     private static final int TCP_DOWNLOAD_PORT = 8000;
-    //initializes the ServerSocket
+    /**
+    * This method acts as the main thread starter for the program. kicks off all the threads. 
+    *
+    */
     public void startServer() {
         new Thread(){ 
             public void run(){
@@ -76,7 +84,11 @@ public class Server {
 
     }
 
-    //Accepts the Connection, processes the user
+    /**
+    * method spinupServerSocket
+    * This method starts all of the connetions, and listens in a loop to all of them. 
+    *
+    */
     public void spinupServerSocket(ServerSocket listen, int udpPort) {
         DatagramSocket udpClient = null;
         if (udpPort == 0){

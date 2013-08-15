@@ -11,7 +11,7 @@ import java.util.*;
  * @author Christopher Jordan , William Daniels
  * @version 1.1
  */
-class HandleTCP extends Thread{
+public class HandleTCP extends Thread{
 
     private final static int BYTES_IN_MEGABYTES = 1048576;
 
