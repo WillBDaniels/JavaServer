@@ -15,7 +15,7 @@ import java.util.*;
 * @author William Daniels
 * @version 1.1
 */
-class HandleHttp extends Thread{
+public class HandleHTTP extends Thread{
 
 //The number of bytes in a megabyte
 private final static int BYTES_IN_MEGABYTES = 1048576;
@@ -32,7 +32,7 @@ public Map<String, String> headerKeyPair = new HashMap<String,String>();
     *
     * @param Socket "client" the client that is connected to the http Port.
     */
-    public HandleHttp(Socket client) { 
+    public HandleHTTP(Socket client) { 
         this.client = client;
         try {
             //Build the necessary streams from the client. 

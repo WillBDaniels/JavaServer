@@ -11,7 +11,7 @@ import java.net.*;
 *@author William Daniels
 *@version 1.1
 */
-class ServerThread {
+public class ServerThread {
 
 private boolean continueUDP = true;
 private Socket client;
@@ -71,6 +71,6 @@ private DatagramSocket udpClient = null;
 		HandleUDP myudpHandler = new HandleUDP(udpClient, 9999);
 	}
 	private void httpHandler(){
-		new HandleHttp(client);
+		new HandleHTTP(client);
 	}
 }
