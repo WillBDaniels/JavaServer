@@ -67,7 +67,7 @@ At the moment, the 'name of jar' is JavaServer.jar. That is subject to change ba
 
  This is not really an all-around all-purpose server. It lacks a lot of commonly found things in servers, that aren't necessary for the scope of the problem this is solving. 
 
- The javadocs for this program are provided through a program called Doxygen, to use it, you need to download it from the source at http://www.stack.nl/~dimitri/doxygen/download.html There are instructions for all platforms there! You'll also have to set your environment variable so that typing the command "Doxygen" on the command line (or terminal) gives you the current Doxygen version. 
+ The javadocs for this program are provided through a program called Doxygen, to use it, you need to download the source from [here]h(ttp://www.stack.nl/~dimitri/doxygen/download.html). There are instructions for all platforms there! You'll also have to set your environment variable so that typing the command "Doxygen" on the command line (or terminal) gives you the current Doxygen version. 
 
  ##Known bugs
  
